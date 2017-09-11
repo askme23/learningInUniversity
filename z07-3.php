@@ -1,7 +1,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Задание №1</title>
+    <title>Задание №3</title>
     <style>
         body {
             font-family: "Roboto Mono", Arial, Tahoma, sans-serif;

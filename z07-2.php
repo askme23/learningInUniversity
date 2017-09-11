@@ -1,7 +1,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Задание №1</title>
+    <title>Задание №2</title>
     <style>
         body {
             font-family: "Roboto Mono", Arial, Tahoma, sans-serif;
@@ -27,7 +27,7 @@
 
             for($j = 1; $j <= AMOUNT; $j++) {
                 $flag = 0;
-                
+
                 foreach($treug as $val) {
                     if ($val == $i * $j) {
                         $flag = 1;
