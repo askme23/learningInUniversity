@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>08-1</title>
+    <style>
+        body {
+            font-family: "Roboto Mono", Arial, Tahoma, sans-serif;
+            font-size: 14px;
+            background-color: rgb(241, 241, 241);
+        }
+
+        p {
+            display: inline-block;
+            margin-right: 20px;
+        }
+
+        form {
+            background-color: #fff;
+            box-shadow: 1px 1px 5px #333;
+            padding: 10px;
+            width: 300px;
+        }
+
+        form input[type="submit"] {
+            background-color: #fff;
+            padding: 3px;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <form action="z08-1b.php" method="GET">
+        <p>Выберите горизонтальное расположение</p>
+        <div>
+            <input type="checkbox" name="align" value="left">Слева</input><br>             
+            <input type="checkbox" name="align" value="center">По центру</input><br>            
+            <input type="checkbox" name="align" value="right">Справа</input>    
+        </div>
+        
+        <p>Выберите горизонтальное расположение</p>
+        <div>
+            <input type="radio" name="valign" value="top">Сверху</input><br>              
+            <input type="radio" name="valign" value="middle">Посередине</input><br>              
+            <input type="radio" name="valign" value="bottom">Внизу</input>
+        </div>
+
+        <input type="submit" value="Выполнить"></input>
+    </form>
+</body>
+</html>

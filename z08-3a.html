@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>08-3</title>
+    <style>
+        body {
+            font-family: "Roboto Mono", Arial, Tahoma, sans-serif;
+            font-size: 14px;
+            background-color: rgb(241, 241, 241);
+        }
+
+        form {
+            background-color: #fff;
+            box-shadow: 1px 1px 5px #333;
+            padding: 10px;
+            width: 300px;
+        }
+
+        form .combo-item {
+            display: inline-block;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <form action="z08-3b.php" method="GET" id="main">
+        <h1>Города и памятники</h1>
+        <div>
+            <label for="name">Введите ваше имя</label><br>
+            <input id="name" name="nameOfParticipant" type="text" width="100"></input>
+        </div>
+
+        <div>
+            <p>Определите, в каком городе находится памятни</p>
+
+            <span>Музей Прадо</span>
+            <select class="combo-item" name="choice[]">
+                <option selected value="0" >Выберите город</option>
+                <option value="1">Санкт-Петербург</option>
+                <option value="2">Москва</option>
+                <option value="3">Иерусалим</option>
+                <option value="4">Милан</option>
+                <option value="5">Париж</option>
+                <option value="6">Мадрид</option>
+                <option value="7">Лондон</option>
+                <option value="8">Нью-Йорк</option>
+                <option value="9">Берлин</option>
+            </select><br>
+
+            <span>Рейхстаг</span>
+            <select class="combo-item" name="choice[]" >
+                <option selected value="0" >Выберите город</option>
+                <option value="1">Санкт-Петербург</option>
+                <option value="2">Москва</option>
+                <option value="3">Иерусалим</option>
+                <option value="4">Милан</option>
+                <option value="5">Париж</option>
+                <option value="6">Мадрид</option>
+                <option value="7">Лондон</option>
+                <option value="8">Нью-Йорк</option>
+                <option value="9">Берлин</option>
+            </select><br>
+
+            <span>Оперный театр Ла Скала</span>
+            <select class="combo-item" name="choice[]" >
+                <option selected value="0" >Выберите город</option>
+                <option value="1">Санкт-Петербург</option>
+                <option value="2">Москва</option>
+                <option value="3">Иерусалим</option>
+                <option value="4">Милан</option>
+                <option value="5">Париж</option>
+                <option value="6">Мадрид</option>
+                <option value="7">Лондон</option>
+                <option value="8">Нью-Йорк</option>
+                <option value="9">Берлин</option>
+            </select><br>
+
+            <span>Медный Всадник</span>
+            <select class="combo-item" name="choice[]" >  
+                <option selected value="0" >Выберите город</option>
+                <option value="1">Санкт-Петербург</option>
+                <option value="2">Москва</option>
+                <option value="3">Иерусалим</option>
+                <option value="4">Милан</option>
+                <option value="5">Париж</option>
+                <option value="6">Мадрид</option>
+                <option value="7">Лондон</option>
+                <option value="8">Нью-Йорк</option>
+                <option value="9">Берлин</option>
+            </select><br>
+
+            <span>Стена Плача</span>
+            <select class="combo-item" name="choice[]" >
+                <option selected value="0" >Выберите город</option>
+                <option value="1">Санкт-Петербург</option>
+                <option value="2">Москва</option>
+                <option value="3">Иерусалим</option>
+                <option value="4">Милан</option>
+                <option value="5">Париж</option>
+                <option value="6">Мадрид</option>
+                <option value="7">Лондон</option>
+                <option value="8">Нью-Йорк</option>
+                <option value="9">Берлин</option>
+            </select><br>
+
+            <span>Третьяковская галерея</span>
+            <select class="combo-item" name="choice[]" >
+                <option selected value="0" >Выберите город</option>
+                <option value="1">Санкт-Петербург</option>
+                <option value="2">Москва</option>
+                <option value="3">Иерусалим</option>
+                <option value="4">Милан</option>
+                <option value="5">Париж</option>
+                <option value="6">Мадрид</option>
+                <option value="7">Лондон</option>
+                <option value="8">Нью-Йорк</option>
+                <option value="9">Берлин</option>
+            </select><br>
+
+            <span>Триумфальная арка</span>
+            <select class="combo-item" name="choice[]" >
+                <option selected value="0" >Выберите город</option>
+                <option value="1">Санкт-Петербург</option>
+                <option value="2">Москва</option>
+                <option value="3">Иерусалим</option>
+                <option value="4">Милан</option>
+                <option value="5">Париж</option>
+                <option value="6">Мадрид</option>
+                <option value="7">Лондон</option>
+                <option value="8">Нью-Йорк</option>
+                <option value="9">Берлин</option>
+            </select><br>
+
+            <span>Статуя Свободы</span>
+            <select class="combo-item" name="choice[]">
+                <option selected value="0" >Выберите город</option>
+                <option value="1">Санкт-Петербург</option>
+                <option value="2">Москва</option>
+                <option value="3">Иерусалим</option>
+                <option value="4">Милан</option>
+                <option value="5">Париж</option>
+                <option value="6">Мадрид</option>
+                <option value="7">Лондон</option>
+                <option value="8">Нью-Йорк</option>
+                <option value="9">Берлин</option>
+            </select><br>
+
+            <span>Тауэр</span>
+            <select class="combo-item" name="choice[]" >
+                <option selected value="0" >Выберите город</option>
+                <option value="1">Санкт-Петербург</option>
+                <option value="2">Москва</option>
+                <option value="3">Иерусалим</option>
+                <option value="4">Милан</option>
+                <option value="5">Париж</option>
+                <option value="6">Мадрид</option>
+                <option value="7">Лондон</option>
+                <option value="8">Нью-Йорк</option>
+                <option value="9">Берлин</option>
+            </select><br>
+        </div>
+        <br>
+
+        <input type="submit" value="Проверить"></input>
+        <input type="button" onclick="document.getElementById('main').reset();" value="Очистить"></input>
+    </form>
+</body>
+</html>
