@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>10-1</title>
+    <style>
+        body {
+                font-family: "Roboto Mono", Arial, Tahoma, sans-serif;
+                font-size: 15px;
+                background-color: rgb(241, 241, 241);
+        }
+        
+        table td {
+            text-align: center;
+        }
+
+        input[type="submit"] {
+            font-family: "Roboto Mono", Arial, Tahoma, sans-serif;
+            font-size: 15px;
+        }
+    </style>
+</head>
+<body>
+    <form action="z10-2.php" method="GET">
+        <table cellpadding="5">
+            <tr>
+                <td rowspan="2">Таблицы</td>
+                <td colspan="2" align="center">Отобразить</td>
+            </tr>
+            <tr>
+                <td>структуру</td>
+                <td>содержимое</td>
+            </tr>
+            <tr>
+                <td>Продавцы(SAL)</td>
+                <td>
+                    <input type="checkbox" name="structure" value="sal"></input>
+                </td>
+                <td>
+                    <input type="checkbox" name="content" value="sal"></input>
+                </td>
+            </tr>
+            <tr>
+                <td>Покупатели(CUST)</td>
+                <td>
+                    <input type="checkbox" name="structure" value="cust"></input>
+                </td>
+                <td>
+                    <input type="checkbox" name="content" value="cust"></input>
+                </td>
+            </tr>
+            <tr>
+                <td>Заказы(ORD)</td>
+                <td>
+                    <input type="checkbox" name="structure" value="ord"></input>
+                </td>
+                <td>
+                    <input type="checkbox" name="content" value="ord"></input>
+                </td>
+            </tr>
+        </table>
+
+        <input type="submit" value="Вывести"></input>
+    </form>
+</body>
+</html>
