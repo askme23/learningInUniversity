@@ -46,13 +46,13 @@
     from my_cust;
     
 --6
-  select s.sname name,
-         s.city city,
-         s.comm comm,
-         count(o.*) count_of_ord,
-         summ(o.amt) summ
+  select s.sname as name,
+         s.city as city,
+         s.comm as comm,
+         count(*) as count_of_ord,
+         sum(o.amt) as summ
     from sal s
-    join ord o on s.snum = o.snum
+    left join ord o on o.snum = s.snum
    where s.snam = '&var_sname';
    
 --7
@@ -60,4 +60,5 @@
          cu.cname name_of_custer
     from sal s
     join cust cu on s.snum = cu.snum
-   where s.city = '&var_city';
+    where cu.city = s.city
+      and s.city = '&var_city';
