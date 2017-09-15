@@ -63,23 +63,26 @@
         echo "<tr>\n";
         for ($x = 0; $x < $num_fields; $x++) {
             $name = mysql_field_name($result, $x); 
-            print "\t<th>$name<br>$rus_name[$name]</th>\n";
+            echo "\t<th>$name<br>$rus_name[$name]</th>\n";
         }
 
-        print "</tr>\n";
+        echo "</tr>\n";
         while ($a_row = mysql_fetch_row($result)) {     
-            print "<tr>\n";
+            echo "<tr>\n";
             foreach ($a_row as $field)  
-            print "\t<td>$field</td>\n"; 
-            print "</tr>\n";
+            echo "\t<td>$field</td>\n"; 
+            echo "</tr>\n";
         }
 
-        print "</table>\n";
+        echo "</table>\n";
 
     }
 
-    if($structTable || $contentTable) {
+    if($structTable) {
         vid_structure();
+    }
+
+    if($contentTable) {
         vid_content();
     }
 
