@@ -37,7 +37,7 @@
 
                     while ($a_row = mysql_fetch_row($result)) {     
                         foreach ($a_row as $field) {
-                            ereg_replace("(d\d\d\d)-(\d\d)-(\d\d)","$3-$2-$1", $field);
+                            $field = ereg_replace('([0-9]{4})-([0-9]{2})-([0-9]{2})', "\\3-\\2-\\1", $field);
                             fwrite($openFile, "$field | "); 
                         }
 
@@ -47,7 +47,7 @@
 
                     $openFileForRead = fopen($file, 'r');
                     while (($buffer = fgets($openFileForRead, 4096)) !== false) {
-                        echo "<p> $buffer </p>";
+                        echo "$buffer <br>";
                     }
                     
                 }
