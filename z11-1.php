@@ -14,7 +14,7 @@
     <body>  
         <?php
             $domen = "localhost";
-            $user = "root"; // здесь GG – номер группы
+            $user = "root"; 
             $pass = ""; 
             $db = "sample";
             $table = "notebook_br35";
