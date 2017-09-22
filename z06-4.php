@@ -14,6 +14,7 @@
     <?php
         $size = 7;
         $arrayOfWeekDay = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'];
+        
         function WeekDay($color, $day) {
             global $size;
 

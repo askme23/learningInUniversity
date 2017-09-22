@@ -1,5 +1,16 @@
-<?php
-    $lang = $_GET['lang'];
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>z05-7.php</title>
+    </head>
+    <body>
+        <?php
+            $lang = $_GET['lang'];
 
-    echo $lang == 'ru' ? 'Privet' : 'Hello';
-?>
+            if ($lang) {
+                 echo $lang == 'ru' ? 'Привет' : 'Hello';
+            }
+        ?>
+    </body>
+</html>    
+    

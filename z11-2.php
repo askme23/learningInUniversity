@@ -28,7 +28,7 @@
                     echo "<tr>";
                         $value = rtrim($value, "\| \r\n");
                         $value = preg_replace('/\s\|/', '</td><td>', $value);
-                        $value = preg_replace('/(\w+\s*\d*@\w+.\w+)/', "<a href=\"mailto:$1\">$1</a>", $value);
+                        $value = preg_replace('/(\w+\s*\d*@\w+(\.\w+)+)/', "<a href=\"mailto:$1\">$1</a>", $value);
                         echo "<td> $value </td>";
                     echo "</tr>";    
                 }

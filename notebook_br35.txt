@@ -1,3 +1,4 @@
-1 | Ruslan | adsfa | adsf | 01-06-2017 | Ruslan@mail.ru | 
-2 | Igor | Новосиб | Бориса Богаткова | 12-12-2000 | Igor@gmail.com | 
-3 | Ivan | Новсибирск | Бориса Богаткова | 02-02-2006 | Ivan@yandex.ru | 
+1 | hhgf | dfds | fdsgds | 01-01-2018 | sfds@dsfd.ru | 
+2 | asdf |  |  | 00-00-0000 | asdf@ict.ncs.ru | 
+3 | Ruslan | asdfa | adsfasdf | 12-12-2000 | Ruslan@madf.ru | 
+4 | asdfads | zxcvz | xzcvz | 12-12-2000 | adsfa@ma.asdf.ru | 

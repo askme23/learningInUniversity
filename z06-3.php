@@ -5,7 +5,7 @@
     <style>
         body {
             font-family: "Roboto Mono", Arial, Tahoma, sans-serif;
-            font-size: 15px;
+            font-size: 50px;
             background-color: rgb(241, 241, 241);
         }
     </style>
