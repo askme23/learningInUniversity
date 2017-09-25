@@ -1,0 +1,76 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: "Roboto Mono", Arial, Tahoma, sans-serif;
+    font-size: 14px;
+}
+
+body #main-form {
+    width: 450px;
+    min-height: 360px;
+    background-color: rgb(241, 241, 241);
+    box-shadow: 0 1px 5px rgba(0,0,0,0.12), 0 1px 5px rgba(0,0,0,0.24);
+    margin: 20px auto;
+    padding: 10px;
+    overflow: auto;
+}
+
+#main-form input[type="text"] {
+    font-family: 'Roboto Mono', Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    border: none;
+    padding: 3px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+#main-form .term-symbol,
+#main-form .not-term-symbol {
+    width: 250px;
+}
+
+#main-form .rules-input {
+    width: 100%;
+    max-width: 100%;
+    min-height: 135px;
+}
+
+#main-form .generetion-symbol {
+    width: 20px;
+}
+
+#main-form .range {
+    width: 70px;
+    margin-right: 10px;
+}
+
+#main-form .print-chains {
+    width: 100%;
+    max-width: 100%;
+    min-height: 250px;
+}
+
+#main-form #gen-btn {
+    font-family: 'Roboto Mono', Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    border: none;
+    padding: 7px;
+    padding-left: 10px;
+    padding-right: 10px;
+
+    transition: all;
+}
+
+#main-form textarea {
+    font-family: 'Roboto Mono', Arial, Helvetica, sans-serif;
+    font-size: 23px;
+}
+
+#main-form .print {
+    display: none;
+}
+
+
+

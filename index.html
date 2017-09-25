@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TYAP_lab1</title>
+
+    <link href="style.css" rel="stylesheet">
+</head>
+<body>
+    <form id="main-form" onsubmit="return false;">
+        <div>
+            <label>
+                Терминальные символы
+                <input type="text" class="term-symbol" placeholder="По разделителю" pattern="([\d\.\,\/\?\-\=\*\+a-z]\W)+[\d\.\,\/\?\-\=\*\+a-z]$">
+            </label>
+        </div>
+        <div>
+           <label>
+                Нетерминальные символы
+                <input type="text" class="not-term-symbol" placeholder="С заглавной по разделителю" pattern="^([A-Z]\W)+[A-Z]$">
+            </label> 
+        </div>
+        <div>
+            <label>
+                Правила:
+            </label>
+            <textarea class="rules-input"></textarea>
+        </div>
+        <div>
+            <label>
+                Порождающий символ
+                <input type="text" class="generetion-symbol" pattern="[A-Z]">
+            </label> 
+        </div>
+        <div>
+            <label>
+                Диапазон цепочек:
+                от <input type="text" class="range" pattern="\d+">
+                до <input type="text" class="range" pattern="\d+">
+            </label>
+        </div>
+        <input type="submit" value="Генерировать" id="gen-btn">
+        <div class="print"> 
+            <label>
+                <p>Вывод цепочек</p>
+                <textarea class="print-chains"></textarea> 
+            </label>
+        </div>
+    </form>
+
+    <script src="script.js"></script>
+</body>
+</html>
