@@ -4,13 +4,15 @@ window.onload = function() {
     let arrayOfTerm = []; // массив терминальных символов
     let arrayOfNotTerm = []; // массив нетерминальных символов
 
-    const genSymbol = ''; // порождающий символ
+    let genSymbol = ''; // порождающий символ
     let arrayOfRange = []; //диапазон
 
+    //при нажатии на кнопку "Генерировать" происходит считывание данных с формы
     submit.onclick = function() {
-        arrayOfRange = [];
+        document.querySelector('#main-form .print').style.display = "block";
         let range = document.getElementsByClassName('range');
-        getSymbol = document.getElementsByClassName('generetion-symbol')[0];
+        arrayOfRange = [];
+        genSymbol = document.getElementsByClassName('generation-symbol')[0].value;
         arrayOfNotTerm = document.getElementsByClassName('not-term-symbol')[0].value.match(/[A-Z]/g);
         arrayOfTerm = document.getElementsByClassName('term-symbol')[0].value.match(/[\d[a-z]]/g);
 
@@ -20,7 +22,7 @@ window.onload = function() {
 
         console.log(arrayOfTerm);
         console.log(arrayOfNotTerm);
-        console.log(getSymbol);
+        console.log(genSymbol);
         console.log(arrayOfRange);
     };
 

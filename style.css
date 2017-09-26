@@ -6,13 +6,24 @@ body {
 }
 
 body #main-form {
-    width: 450px;
-    min-height: 360px;
+    width: 920px;
+    min-height: 280px;
     background-color: rgb(241, 241, 241);
     box-shadow: 0 1px 5px rgba(0,0,0,0.12), 0 1px 5px rgba(0,0,0,0.24);
     margin: 20px auto;
     padding: 10px;
     overflow: auto;
+}
+
+#main-form .bord {
+    padding: 7px;
+    border: 2px dashed rgba(0,0,0,0.12);
+    margin-bottom: 10px;
+}
+
+#main-form span {
+    display: inline-block;
+    margin-right: 5px;
 }
 
 #main-form input[type="text"] {
@@ -27,27 +38,24 @@ body #main-form {
 
 #main-form .term-symbol,
 #main-form .not-term-symbol {
-    width: 250px;
+    width: 240px;
 }
 
 #main-form .rules-input {
-    width: 100%;
-    max-width: 100%;
     min-height: 135px;
 }
 
-#main-form .generetion-symbol {
+#main-form .generation-symbol {
     width: 20px;
+    margin-right: 20px;
 }
 
 #main-form .range {
-    width: 70px;
-    margin-right: 10px;
+    width: 150px;
+    margin-right: 5px;
 }
 
 #main-form .print-chains {
-    width: 100%;
-    max-width: 100%;
     min-height: 250px;
 }
 
@@ -65,7 +73,12 @@ body #main-form {
 
 #main-form textarea {
     font-family: 'Roboto Mono', Arial, Helvetica, sans-serif;
-    font-size: 23px;
+    font-size: 20px;
+    border: 2px dashed rgba(0,0,0,0.12);
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    margin-bottom: 10px;
 }
 
 #main-form .print {
