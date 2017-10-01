@@ -1,18 +1,17 @@
 <?php
     function vid_structure() {
         global $db, $conn, $structTable;
+        $sql = "SHOW TABLES FROM $db";
+        $tab_res = mysql_query($sql); 
 
-        for($i = 0; $i < count($structTable); $i++) {
-            $tab_res = mysql_list_tables($db, $conn);
-            echo "<h4>Структура таблицы $structTable[$i]</h4>";
-            print "<dl><dd>\n"; 
+        while ($tab_rows = mysql_fetch_row($tab_res)) {
+            for($i = 0; $i < count($structTable); $i++) {
 
-            $j = 0;
-            while ($tab_rows = mysql_fetch_row($tab_res)) { 
-                if ($tab_rows[$j] == $structTable[$i]) {
-                    print "<b>$tab_rows[$j]</b>\n";
+                if ($tab_rows[0] == $structTable[$i]) {
+                    echo "<h4>Структура таблицы $structTable[$i]</h4>";
+                    echo "<dl><dd>\n"; 
 
-                    $query_res = mysql_query("SELECT * from $tab_rows[$j]"); 
+                    $query_res = mysql_query("SELECT * from $tab_rows[0]"); 
                     $num_fields = mysql_num_fields($query_res); 
                     print "<dl><dd>\n";
 
@@ -33,68 +32,68 @@
                     } 
                    
                     print "</dl>\n";
+                } else {
+                    continue;
                 }
-                $j++; 
-            } 
-
+            }
             print "</dl>\n";
         }
         
     }
 
-    // function vid_content() {
-    //     global $db, $conn, $contentTable;
-    //     $result = [];
+    function vid_content() {
+        global $db, $conn, $contentTable;
+        $sql = "SHOW TABLES FROM $db";
+        $tab_res = mysql_query($sql); 
+        $rus_name = array('cnum' => 'Номер покупателя', 
+                          'cname' => 'Имя покупателя',
+                          'city' => 'Город',
+                          'rating' => 'Рейтинг покупателя',
+                          'snum' => 'Номер продавца',
+                          'sname' => 'Имя продавца',
+                          'comm' => 'Коммисионные продавца',
+                          'onum' => 'Номер заказа',
+                          'amt' => 'Сумма заказа',
+                          'odate' => 'Дата заказа',
+                         );
 
-    //     for($i = 0; i < count($contentTable); $i++) {
-    //         array_push($result, mysql_query("SELECT * FROM $contentTable[$i]"));
-    //     }
+        while ($tab_rows = mysql_fetch_row($tab_res)) {
+            for ($i = 0; $i < count($contentTable); $i++) {
+                if ($tab_rows[0] == $contentTable[$i]) {
+                    $query_res = mysql_query("SELECT * from $tab_rows[0]"); 
+                    $num_rows = mysql_num_rows($query_res);
+                    $num_fields = mysql_num_fields($query_res);
 
-    //     //$result = mysql_query("SELECT * FROM $contentTable");
-    //     for($j = 0; $j < count($result); $j++) {
-    //         $num_rows = mysql_num_rows($result);
-    //         $num_fields = mysql_num_fields($result);
+                    echo "<h4>Содержимое таблицы $contentTable[$i]</h4>";
+                    echo "<p><table cellpadding=\"5\" border=1>\n"; 
+                    echo "<tr>\n";
+                    for ($x = 0; $x < $num_fields; $x++) {
+                        $name = mysql_field_name($query_res, $x); 
+                        echo "\t<th>$name<br>$rus_name[$name]</th>\n";
+                    }
 
-    //         $rus_name = array('cnum' => 'Номер покупателя', 
-    //                           'cname' => 'Имя покупателя',
-    //                           'city' => 'Город',
-    //                           'rating' => 'Рейтинг покупателя',
-    //                           'snum' => 'Номер продавца',
-    //                           'sname' => 'Имя продавца',
-    //                           'comm' => 'Коммисионные продавца',
-    //                           'onum' => 'Номер заказа',
-    //                           'amt' => 'Сумма заказа',
-    //                           'odate' => 'Дата заказа',
-    //                          );
+                    echo "</tr>\n";
+                    while ($a_row = mysql_fetch_row($query_res)) {     
+                        echo "<tr>\n";
+                        foreach ($a_row as $field)  
+                        echo "\t<td>$field</td>\n"; 
+                        echo "</tr>\n";
+                    }
 
-    //         echo "<h4>Содержимое таблицы $contentTable</h4>";
-    //         echo "<p><table cellpadding=\"5\" border=1>\n"; 
-    //         echo "<tr>\n";
-    //         for ($x = 0; $x < $num_fields; $x++) {
-    //             $name = mysql_field_name($result, $x); 
-    //             echo "\t<th>$name<br>$rus_name[$name]</th>\n";
-    //         }
-
-    //         echo "</tr>\n";
-    //         while ($a_row = mysql_fetch_row($result)) {     
-    //             echo "<tr>\n";
-    //             foreach ($a_row as $field)  
-    //             echo "\t<td>$field</td>\n"; 
-    //             echo "</tr>\n";
-    //         }
-
-    //         echo "</table>\n";
-    //     } 
-        
-
-    // }
+                    echo "</table>\n";
+                } else {
+                    continue;
+                }
+            }
+        }
+    }
 
     if(count($structTable)) {
         vid_structure();
     }
 
-    // if($contentTable) {
-    //     vid_content();
-    // }
+    if(count($contentTable)) {
+        vid_content();
+    }
 
     echo "<a href=\"z10-1.html\">Возврат к выбору таблицы</a>";
