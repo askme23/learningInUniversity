@@ -1,0 +1,17 @@
+INSERT INTO p4307 (COMMAND, COMMAND_TYPE)
+VALUES ('ALTER SESSION', 'Управление'),
+       ('ALTER SESSION', 'Управление'),
+       ('COMMIT', 'Управление'),
+       ('ROLLBACK', 'Управление'),
+       ('DELETE', 'DML'),
+       ('INSERT', 'DML'),
+       ('SELECT', 'DML'),
+       ('UPDATE', 'DML'),
+       ('ALTER ROLE', 'DDL'),
+       ('ALTER VIEW', 'DDL'),
+       ('CREATE ROLE', 'DDL'),
+       ('CREATE TABLE', 'DDL'),
+       ('DROP', 'DDL'),
+       ('GRANT', 'DDL'),
+       ('REVOK', 'DDL'),
+       ('TRUNCATE', 'DDL')
