@@ -49,7 +49,7 @@
             </label><br>
             
             <label>Введите email<span style="color: red;">*</span>:
-                <input type="email" name="mail"></input>
+                <input type="email" name="mail" required></input>
             </label><br>
             
             <input type="submit" value="Записать"></input>

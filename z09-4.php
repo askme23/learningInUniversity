@@ -65,7 +65,7 @@
             print "</table>\n"; 
             print "<input type=\"submit\" value=\"Выбрать\"></input>";
             echo "</form>"; 
-
+            
             //дальше идет блок изменения данных
             if ($_POST['id']) {
                 $id = $_POST['id'];

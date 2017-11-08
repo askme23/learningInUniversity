@@ -25,7 +25,7 @@
             } else {
                 $openFile = fopen($file, 'w+');
                 $conn = mysql_connect($domen, $user, $pass);
-
+                
                 if (!$conn) {
                     die("Нет соединения с MySQL");
                 } else {

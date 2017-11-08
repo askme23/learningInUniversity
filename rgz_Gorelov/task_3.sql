@@ -5,7 +5,7 @@ order by @seq;
 
 /***** 2 *****/
 select count(t.COMMAND), 
-       t.COMMAND_TYPE 
+       t.COMMAND_TYPE  
   from p4307 t 
  where t.COMMAND != @com
  group by t.COMMAND_TYPE
