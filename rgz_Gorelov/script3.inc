@@ -3,6 +3,7 @@
     
     $field = $_GET['field'];
 
+    echo "<div class=\"background-block\">";
     if ($field && $field != 'Вывести всю таблицу') {
         $sql = "select $field from $tableName";
         $tab_res = mysql_query($sql);
@@ -43,4 +44,5 @@
 
         print "</table>\n"; 
     }
+    echo "</div>";
 ?>

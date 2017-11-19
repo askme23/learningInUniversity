@@ -16,6 +16,7 @@
     }
 
     echo "</select>";
-    echo "<input type=\"submit\" class=\"main-submit\" value=\"Вывести поле\">";
+    echo "<br>";
+    echo "<input type=\"submit\" class=\"main-submit\" value=\"Вывести\">";
     echo "</form>"; 
 ?>
