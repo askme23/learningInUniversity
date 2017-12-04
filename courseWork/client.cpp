@@ -1,4 +1,5 @@
 #include "base64.h"
+#include "base64.cpp"
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
@@ -24,16 +25,64 @@ using namespace std;
 struct sockaddr_in str_server;
 struct sockaddr_in str_client;
 struct hostent *hp;
+string buf1;
 
-void execTransaction(int *descriptor, char *command) {
+void execTransaction(int *descriptor, char *buf) {
 	int len;
-
+	
+	string command = buf;
 	//fprintf(stderr, "bufer = %s\n", command);
-	send(*descriptor, command, strlen(command), 0);
-	len = recv(*descriptor, command, BUFSIZE, 0);
-	command[len] = '\0';
+	send(*descriptor, buf, strlen(buf), 0);
+	len = recv(*descriptor, buf, BUFSIZE, 0);
+	buf[len] = '\0';
+	
+	printf("Response: %s\n", buf);
 
-	printf("Response: %s\n", command);
+	buf1.append(buf);
+}
+
+void writeToFile() {
+	FILE  *decodeMsg, *finishMsg;
+	int length = buf1.length();
+	int index = buf1.rfind("base64") + 10;
+	string tmp;
+
+	buf1 = buf1.substr(index);
+	index = buf1.find("=");
+	tmp = buf1.substr(0, index + 1);
+	length = tmp.length();
+	
+	decodeMsg = fopen("message", "wb");
+	//tmp = base64_decode(tmp);
+	
+	for (int i = 0 ; i < length; i++) {
+		if (tmp.at(i) >= 'a' && tmp.at(i) <= 'z' || tmp.at(i) >= 'A' && tmp.at(i) <= 'Z' || tmp.at(i) >= '0'&&
+			tmp.at(i) <= '9' || tmp.at(i) == '+' || tmp.at(i) == '/' || tmp.at(i) == '=') {
+			fputc(tmp.at(i), decodeMsg);
+		}
+	}
+	fclose(decodeMsg);
+
+	decodeMsg = fopen("message", "rb");
+	finishMsg = fopen("image.png", "wb");
+
+	string image;
+	char c;
+	while(!feof(decodeMsg)) {
+		c = fgetc(decodeMsg);
+		if (c >= 'a' && c <= 'z' || c >= 'A' && c <= 'Z' || c >= '0'&&
+			c <= '9' || c == '+' || c == '/' || c == '=') {
+			image.push_back(c);
+		}
+	}
+
+	// cout << "image = " << image.size() << endl;
+	// cout << "image = " << base64_decode(image) << endl;
+	image = base64_decode(image);
+	// cout << "image = " << image << endl;
+	fwrite(image.c_str(), sizeof(char), image.size(), finishMsg);
+	fclose(finishMsg);
+	fclose(decodeMsg);
 }
 
 void createConnection(int *descriptor, char *domen, char *username, char *password) {
@@ -82,7 +131,7 @@ int main(int argc, char **argv) {
 	char buf[BUFSIZE];
 	char user[BUFSIZE];
 	char pass[BUFSIZE];
-	
+
 	fprintf (stdout, "user: ");
     fscanf (stdin, "%s", &user);   
     fprintf (stdout, "pass: ");
@@ -90,10 +139,10 @@ int main(int argc, char **argv) {
 
     system("reset");
 
-    //этап авторизации
+    //Этап авторизации
 	createConnection(&sockfd, argv[1], user, pass);
 
-	//этап транзакции
+	//Этап транзакции
 	while (1) {
 		gets(buf);
 		len = strlen(buf);
@@ -101,12 +150,13 @@ int main(int argc, char **argv) {
 		buf[len + 1] = '\0';
 
 		if (len > 1) {
-			execTransaction(&sockfd, buf);
-
 			if (!strcmp(buf, "END\n")) {
 				close(sockfd);
 				exit(0);
 			}
+			
+			execTransaction(&sockfd, buf);
+			writeToFile();
 		}
 	}
 
