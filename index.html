@@ -3,33 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <title>Курсовая работа</title>
+    <link href="style.css" rel="stylesheet">
 </head>
 <body>
-    <form id="main-form" onsubmit="return false">
-        <label>
-            Алфавит
-            <input type="text" class="input-alphabet">
-        </label>
-        <label>
-            Кратность длины
-            <input type="text" class="input-multiplicity">
-        </label>
-        <label>
-            Фиксированная подцепочка
-            <input type="text" class="input-pickAp">
-        </label>
+    <form id="main-form">
+        <span>Меню</span>
+        <div>
+            <input type="button" class="choice-btn" value="Тема">
+            <input type="button" class="choice-btn task" value="Расчеты">
+            <input type="button" class="choice-btn" value="Автор">
+        </div>
+        <!-- <input type="button" class="choice-btn">   -->
+    </form>
+
+    <form id="task-form" onsubmit="return false" style="display: none;">
+        <div class="container">
+            <label>
+                <p>Алфавит</p>
+                <input type="text" class="input-alphabet">
+            </label>
+        </div>
+        <div class="container">
+            <label>
+                <p>Кратность длины</p>
+                <input type="text" class="input-multiplicity">
+            </label>
+        </div>
+        <div class="container">
+            <label>
+                <p>Фиксированная подцепочка</p>
+                <input type="text" class="input-pickAp">
+            </label>
+        </div>
         <input type="submit" class="btn-gen" value="Сгенерировать" style="padding: 5px;">
         <!-- <label for="">
             <input type="text">
         </label> -->
-        <textarea name="exp" id="area-exp" cols="30" rows="10"></textarea>
+        <textarea name="exp" id="area-exp" class="print-chains"></textarea>
         <br/>
         <label>
             Диапазон длин
             с <input type="text" style="width: 30px">
             по <input type="text" style="width: 30px">
         </label>
-        <textarea name="conv" id="area-conv" cols="100" rows="50"></textarea>
+        <textarea name="conv" id="area-conv" class="print-chains"></textarea>
+
+        <input type="button" class="close-win">
     </form>
 
     <script src="script.js"></script>

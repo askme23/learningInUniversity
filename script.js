@@ -10,19 +10,68 @@ let parseDataFromInput = function() {
         "mult": mult,
         "pick": pick
     };
+    const errors = {
+        "element": "",
+        "check": false,
+        "message": ""
+    };
 
+    if (!alph.length && !mult && !pick) {
+        errors.message = "Заполните поля начальными данными";
+
+        return errors;
+    }
+
+    if (mult == "") {
+        errors.element = "Кратность";
+        errors.message = "Поле " + errors.element + " заполнено некорректными данными.";
+        
+        return errors;
+    } else if (mult < 0) {
+        errors.element = "Кратность";
+        errors.message = "Поле " + errors.element + " не может быть пустым.";
+
+        return errors;
+    }
+
+    if (pick.length == 0) {
+        errors.element = "Подцепочка";
+        errors.message = "Поле " + errors.element + " не может быть пустым.";
+
+        return errors;
+    } else {
+        pick.split('').forEach(item => {
+            if (alph.indexOf(item) == -1) {
+                errors.element = "Подцепочка";
+                errors.message = "Подцепочка " + pick + " содержит символы, не входящие в состав алфавита";
+                
+                return errors;
+            } 
+        });
+    }
+
+    if (!alph.length) {
+        errors.element = "Алфавит";
+        errors.message = "Алфавит не может быть пустым";
+
+        return errors;
+    }
 
     return objWithStartData;
 };
 
 
 let generationRegExp = function() {
-    if (obj = parseDataFromInput()) {
+    let obj = parseDataFromInput();
+    if (obj.check == undefined) {
         let exp = "";
         if (+obj.mult == obj.pick.length) {
             exp = obj.pick;
         } else {
-            const lengthOfRest = obj.mult - obj.pick.length;
+            let lengthOfRest = obj.mult - obj.pick.length;
+            if (lengthOfRest < 0) {
+                lengthOfRest *= -1;
+            }
             let arrayOfAnySymbol = [];
             let anySymbol = "("
 
@@ -52,8 +101,8 @@ let generationRegExp = function() {
                 }
             }
             exp += ")";
-            
-            //граничная части выражения
+
+            //граничная часть выражения
             let boundariesOfExp = "(";
             for (let i = 0; i < +obj.mult; i++) {
                 boundariesOfExp += anySymbol; 
@@ -65,13 +114,24 @@ let generationRegExp = function() {
 
         return exp;
     } else {
-        alert('Неверные входные данные');
+        alert(obj.message);
     }
 };
 
 window.onload = function() {
     const genBtn = document.getElementsByClassName('btn-gen')[0];
+    const tskBtn = document.getElementsByClassName('choice-btn task')[0];
+    const closeBtn = document.getElementsByClassName('close-win')[0];
     //console.log(genBtn);
+    tskBtn.onclick = function() {
+        document.getElementById('task-form').style.display = "";
+        document.getElementById('main-form').style.display = "none";
+    };
+
+    closeBtn.onclick = function() {
+        document.getElementById('task-form').style.display = "none";
+        document.getElementById('main-form').style.display = "";
+    };
 
     genBtn.onclick = function(e) {
         document.getElementById('area-exp').innerHTML = generationRegExp(); 
