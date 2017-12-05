@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Курсовая работа</title>
+</head>
+<body>
+    <form id="main-form" onsubmit="return false">
+        <label>
+            Алфавит
+            <input type="text" class="input-alphabet">
+        </label>
+        <label>
+            Кратность длины
+            <input type="text" class="input-multiplicity">
+        </label>
+        <label>
+            Фиксированная подцепочка
+            <input type="text" class="input-pickAp">
+        </label>
+        <input type="submit" class="btn-gen" value="Сгенерировать" style="padding: 5px;">
+        <!-- <label for="">
+            <input type="text">
+        </label> -->
+        <textarea name="exp" id="area-exp" cols="30" rows="10"></textarea>
+        <br/>
+        <label>
+            Диапазон длин
+            с <input type="text" style="width: 30px">
+            по <input type="text" style="width: 30px">
+        </label>
+        <textarea name="conv" id="area-conv" cols="100" rows="50"></textarea>
+    </form>
+
+    <script src="script.js"></script>
+</body>
+</html>
