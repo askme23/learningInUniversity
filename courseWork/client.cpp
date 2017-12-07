@@ -29,16 +29,44 @@ string buf1;
 
 void execTransaction(int *descriptor, char *buf) {
 	int len;
-	
+	int sizeOfMsg = 0;
+	char *tmpStr = new char;
+	bool checkForRetr = false;
 	string command = buf;
-	//fprintf(stderr, "bufer = %s\n", command);
+
+	//проверка на то, была ли эта команда "получения сообщения"
+	if (command.find("RETR") != -1) {
+		checkForRetr = true;
+	}
+
 	send(*descriptor, buf, strlen(buf), 0);
 	len = recv(*descriptor, buf, BUFSIZE, 0);
 	buf[len] = '\0';
-	
 	printf("Response: %s\n", buf);
 
-	buf1.append(buf);
+	if (checkForRetr) {
+		//получаем размер принятого сообщения
+		for (int i = 0, j = 0; i < strlen(buf); i++) {
+			if (buf[i] >= '0' && buf[i] <= '9') {
+				tmpStr[j++] = buf[i];
+			}
+		}
+		sizeOfMsg = atoi(tmpStr);
+
+		cout << sizeOfMsg << endl;
+		int size = 0;
+		char bufForBodyMsg[sizeOfMsg + 2];
+		while (size < sizeOfMsg) {
+			len = recv(*descriptor, bufForBodyMsg, sizeOfMsg, 0);
+			size += len;
+			buf1.append(bufForBodyMsg);
+			fprintf(stdout, "%s", bufForBodyMsg);	
+		}
+		cout << "buf1 = " << buf1 << endl;
+	
+	}
+
+	delete(tmpStr);
 }
 
 void writeToFile() {
@@ -86,7 +114,7 @@ void writeToFile() {
 }
 
 void createConnection(int *descriptor, char *domen, char *username, char *password) {
-	int result;
+	int result, len = 0;
 	char buf[BUFSIZE];
 
 	if((*descriptor = socket(AF_INET, SOCK_STREAM, 0)) < 0){
@@ -120,9 +148,16 @@ void createConnection(int *descriptor, char *domen, char *username, char *passwo
 	fprintf(stderr, "Connection: %s", buf);
 
 	sprintf (buf, "USER %s\n", username);
-    execTransaction (descriptor, buf);          
+	send(*descriptor, buf, strlen(buf), 0);
+	len = recv(*descriptor, buf, BUFSIZE, 0);
+	buf[len] = '\0';
+	printf("Response: %s\n", buf);
+
     sprintf (buf, "PASS %s\n", password);
-    execTransaction (descriptor, buf);
+	send(*descriptor, buf, strlen(buf), 0);
+	len = recv(*descriptor, buf, BUFSIZE, 0);
+	buf[len] = '\0';
+	printf("Response: %s\n", buf);
 
 }
 
@@ -132,10 +167,12 @@ int main(int argc, char **argv) {
 	char user[BUFSIZE];
 	char pass[BUFSIZE];
 
-	fprintf (stdout, "user: ");
-    fscanf (stdin, "%s", &user);   
-    fprintf (stdout, "pass: ");
-    fscanf (stdin, "%s", &pass);
+	system("clear");
+	fprintf(stdout, "********** АВТОРИЗАЦИЯ ************\n");
+	fprintf(stdout, "LOGIN: ");
+    fscanf(stdin, "%s", &user);   
+    fprintf(stdout, "PASSWORD: ");
+    fscanf(stdin, "%s", &pass);
 
     system("reset");
 
@@ -150,7 +187,8 @@ int main(int argc, char **argv) {
 		buf[len + 1] = '\0';
 
 		if (len > 1) {
-			if (!strcmp(buf, "END\n")) {
+			if (!strcmp(buf, "QUIT\n")) {
+				execTransaction(&sockfd, buf);
 				close(sockfd);
 				exit(0);
 			}
