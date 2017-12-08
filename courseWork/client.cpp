@@ -27,51 +27,10 @@ struct sockaddr_in str_client;
 struct hostent *hp;
 string buf1;
 
-void execTransaction(int *descriptor, char *buf) {
-	int len;
-	int sizeOfMsg = 0;
-	char *tmpStr = new char;
-	bool checkForRetr = false;
-	string command = buf;
-
-	//проверка на то, была ли эта команда "получения сообщения"
-	if (command.find("RETR") != -1) {
-		checkForRetr = true;
-	}
-
-	send(*descriptor, buf, strlen(buf), 0);
-	len = recv(*descriptor, buf, BUFSIZE, 0);
-	buf[len] = '\0';
-	printf("Response: %s\n", buf);
-
-	if (checkForRetr) {
-		//получаем размер принятого сообщения
-		for (int i = 0, j = 0; i < strlen(buf); i++) {
-			if (buf[i] >= '0' && buf[i] <= '9') {
-				tmpStr[j++] = buf[i];
-			}
-		}
-		sizeOfMsg = atoi(tmpStr);
-
-		cout << sizeOfMsg << endl;
-		int size = 0;
-		char bufForBodyMsg[sizeOfMsg + 2];
-		while (size < sizeOfMsg) {
-			len = recv(*descriptor, bufForBodyMsg, sizeOfMsg, 0);
-			size += len;
-			buf1.append(bufForBodyMsg);
-			fprintf(stdout, "%s", bufForBodyMsg);	
-		}
-		cout << "buf1 = " << buf1 << endl;
-	
-	}
-
-	delete(tmpStr);
-}
-
 void writeToFile() {
 	FILE  *decodeMsg, *finishMsg;
 	int length = buf1.length();
+	//cout << "len = " << length << endl;
 	int index = buf1.rfind("base64") + 10;
 	string tmp;
 
@@ -111,6 +70,50 @@ void writeToFile() {
 	fwrite(image.c_str(), sizeof(char), image.size(), finishMsg);
 	fclose(finishMsg);
 	fclose(decodeMsg);
+}
+
+void execTransaction(int *descriptor, char *buf) {
+	int len = 0;
+	int sizeOfMsg = 0;
+	char *tmpStr = new char;
+	bool checkForRetr = false;
+	string command = buf;
+
+	//проверка на то, была ли эта команда "получения сообщения"
+	if (command.find("RETR") != -1) {
+		checkForRetr = true;
+	}
+
+	send(*descriptor, buf, strlen(buf), 0);
+	len = recv(*descriptor, buf, BUFSIZE, 0);
+	buf[len] = '\0';
+	printf("Response: %s\n", buf);
+
+	if (checkForRetr) {
+		//получаем размер принятого сообщения
+		for (int i = 0, j = 0; i < strlen(buf); i++) {
+			if (buf[i] >= '0' && buf[i] <= '9') {
+				tmpStr[j++] = buf[i];
+			}
+		}
+		sizeOfMsg = atoi(tmpStr);
+
+		cout << sizeOfMsg << endl;
+		int size = 0;
+		char bufForBodyMsg[sizeOfMsg + 2];
+		while (size < sizeOfMsg) {
+			len = recv(*descriptor, bufForBodyMsg, sizeOfMsg, 0);
+			size += len;
+			buf1.append(bufForBodyMsg);
+			fprintf(stdout, "%s", bufForBodyMsg);	
+		}
+		cout << endl;
+		writeToFile();
+		cout << "buf1 = " << buf1 << endl;
+	
+	}
+
+	delete(tmpStr);
 }
 
 void createConnection(int *descriptor, char *domen, char *username, char *password) {
@@ -194,7 +197,6 @@ int main(int argc, char **argv) {
 			}
 			
 			execTransaction(&sockfd, buf);
-			writeToFile();
 		}
 	}
 
