@@ -219,19 +219,20 @@ var generationChains = function(reg, range) {
 
 var checkRegForCorrect = function(reg, alph, pick) {
     var nesting = 0; //вложенность
-    var symbols = reg.match(/[a-zA-Zа-яА-Я]+/g);
+    var symbols = reg.split('');
     var error = {
         message: "",
         status: false
     };
 
     for (var i = 0; i < reg.length; i++) {
-        if (reg[i] != '+' && reg[i] != '*' && reg[i] != '(' && reg[i] != ')' && alph.indexOf(reg[i]) == -1) {
+        if (reg[i] != '+' && reg[i] != '*' && reg[i] != '(' && reg[i] != ')' && symbols.indexOf(reg[i]) == -1) {
             error.message = 'Регулярное выражение содержит недопустимые символы.';
             error.status = true;
             
             return error;
         }
+
         if (nesting > 2) {
             error.mesage = "Слишком большая вложенность.";
             error.status = true;
@@ -342,7 +343,7 @@ window.onload = function() {
         //вывод цепочек в указанном диапазоне и указанных условиях вывода, а также проверка на валидность данных
         if (checkDataFromFields.check == undefined && areaExp.value.length != 0) {
             var checkReg = checkRegForCorrect(areaExp.value, checkDataFromFields.alph, checkDataFromFields.pick);
-
+            console.log(checkReg);
             if (!checkReg.status) {
                 if (range[0] < range[1] && range[0] >= 0 && range[1] > 0) {
                     var chains = generationChains(areaExp.value, range[1]).sort((a, b) => {
@@ -352,9 +353,7 @@ window.onload = function() {
                     //условия вывода цепочек
                     var finChains = [];
                     for(var i = 0; i < chains.length; i++) {
-                        if (chains[i].length >= range[0] && chains[i].length <= range[1] && 
-                            chains[i].length % checkDataFromFields.mult == 0 && chains[i].indexOf(checkDataFromFields.pick) != -1) {
-                            
+                        if (chains[i].length >= range[0] && chains[i].length <= range[1]) {
                             if (finChains.indexOf(chains[i]) == -1) {
                                 finChains.push(chains[i]);
                                 areaConv.value += chains[i] + '\n';
