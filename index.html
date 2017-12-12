@@ -9,9 +9,9 @@
     <form id="main-form">
         <span>Меню</span>
         <div>
-            <input type="button" class="choice-btn" value="Тема">
+            <input type="button" class="choice-btn theme" value="Тема">
             <input type="button" class="choice-btn task" value="Расчеты">
-            <input type="button" class="choice-btn" value="Автор">
+            <input type="button" class="choice-btn author" value="Автор">
         </div>
         <!-- <input type="button" class="choice-btn">   -->
     </form>
@@ -53,6 +53,29 @@
         <input type="button" class="close-win">
     </form>
 
+    <form id="author-form" style="display: none;">
+        <p>Студент группы ИП-413, факультета ИВТ - Горелов Руслан Сергеевич</p>
+        <a href="https://github.com/askme23" target="_blank">
+            <img src="GitHub-Mark-32px.png" alt="github">
+            GitHub
+        </a>
+        <input type="button" class="close-win">    
+    </form>
+
+    <form id="theme-form" style="display: none;">
+        <p>
+            Написать программу, которая по предложенному описанию языка построит регулярное
+            выражение, задающее этот язык, и сгенерирует с его помощью все цепочки языка в 
+            заданном диапазоне длин. Предусмотреть также возможность генерации цепочек по
+            введённому пользователем РВ (в рамках варианта). 
+        </p>
+        <h5>Вариант <b>(7)</b></h5>
+        <p>
+            Алфавит, кратность длины и заданная фиксированная подцепочка всех цепочек языка.
+        </p>
+        <input type="button" class="close-win">   
+    </form>
+    
     <script src="script.js"></script>
 </body>
 </html>

@@ -1,18 +1,24 @@
 body {
     margin: 0;
     padding: 0;
-    font-family: "Roboto Mono", Arial, Tahoma, sans-serif;
+    font-family:  Arial, Tahoma, sans-serif;
     font-size: 14px;
-    background-color: #333;
+    background-color: #888888;
+}
+
+form {
+    background-color: #AEAEC7;
+    box-shadow: 0 1px 5px rgba(0,0,0,0.12), 0 1px 5px rgba(0,0,0,0.24);
+    margin: 20px auto;
+    padding: 30px;
+    position: relative;
 }
 
 #main-form {
     width: 380px;
     min-height: 300px;
-    background-color: #668;
     box-shadow: 0 1px 5px rgba(0,0,0,0.12), 0 1px 5px rgba(0,0,0,0.24);
     padding: 20px;
-    margin: 20px auto;
     text-align: center;
 }
 
@@ -56,9 +62,7 @@ body {
 #task-form {
     width: 800px;
     min-height: 360px;
-    background-color: rgb(241, 241, 241);
     box-shadow: 0 1px 5px rgba(0,0,0,0.12), 0 1px 5px rgba(0,0,0,0.24);
-    margin: 20px auto;
     padding: 30px;
     overflow: auto;
     position: relative;
@@ -104,12 +108,12 @@ body {
     min-height: 190px;
 }
 
-#task-form .close-win {
+.close-win {
     background-image: url(close.png);
     background-size: contain;
     position: absolute;
     box-shadow: none;
-    background-color: rgb(241, 241, 241);
+    background-color: transparent;
     border: none;
     width: 30px;
     height: 30px;
@@ -117,6 +121,44 @@ body {
     top: 10px;
     cursor: pointer;
 }
+
+#author-form {
+    width: 380px;
+    height: 100px;
+    text-align: center;
+    font-size: 22px;
+}
+
+#author-form a {
+    text-decoration: none;
+    cursor: pointer;
+    color: #333;
+    position: relative;
+}
+
+#author-form img {
+    position: absolute;
+    margin-right: 5px;
+    width: 32px;
+    height: 32px;
+    left: -40px;
+    top: -8px;
+    transition: width 0.3s, height 0.3s;
+    -webkit-transition: width 0.3s, height 0.3s;
+}
+
+#author-form img:hover {
+    width: 35px;
+    height: 35px;
+}
+
+#theme-form {
+    width: 480px;
+    height: 250px;
+    text-align: center;
+    font-size: 18px;
+}
+
 
 
 

@@ -1,24 +1,24 @@
 //Функция для осуществления всех проверок
-let parseDataFromInput = function() {
-    let alph = document.getElementsByClassName('input-alphabet')[0].value;
-    const mult = document.getElementsByClassName('input-multiplicity')[0].value;
-    const pick = document.getElementsByClassName('input-pickAp')[0].value;
+var parseDataFromInput = function() {
+    var alph = document.getElementsByClassName('input-alphabet')[0].value;
+    var mult = document.getElementsByClassName('input-multiplicity')[0].value;
+    var pick = document.getElementsByClassName('input-pickAp')[0].value;
     //console.log(alph);
     alph = alph.replace(/[,\.\|\\\s\-]/g, '').split('');
 
-    const objWithStartData = {
+    var objWithStartData = {
         "alph": alph,
         "mult": mult,
         "pick": pick
     };
-    const errors = {
+    var errors = {
         "element": "",
         "check": false,
         "message": ""
     };
 
-    let items = pick.split('');
-    for (let i = 0; i < items.length; i++) {
+    var items = pick.split('');
+    for (var i = 0; i < items.length; i++) {
         if (alph.indexOf(items[i]) == -1) {
             errors.message = "Подцепочка '" + pick + "' содержит символы, не входящие в состав алфавита";
           
@@ -62,20 +62,20 @@ let parseDataFromInput = function() {
 };
 
 
-let generationRegExp = function() {
-    let obj = parseDataFromInput();
+var generationRegExp = function() {
+    var obj = parseDataFromInput();
     console.log(obj);
     if (obj.check == undefined) {
-        let exp = "";
-        let lengthOfRest = obj.mult - obj.pick.length;
+        var exp = "";
+        var lengthOfRest = obj.mult - obj.pick.length;
         if (lengthOfRest < 0) {
             lengthOfRest *= -1;
         }
-        let arrayOfAnySymbol = [];
-        let anySymbol = "("
+        var arrayOfAnySymbol = [];
+        var anySymbol = "("
 
         //любой символ из алфавита
-        for (let i = 0; i < obj.alph.length; i++) {
+        for (var i = 0; i < obj.alph.length; i++) {
             if (i) {
                 anySymbol += "+" + obj.alph[i];    
             } else {
@@ -87,9 +87,9 @@ let generationRegExp = function() {
         exp += "(";
         //главная часть выражения, где перебираются все варианты
         if (obj.pick.length != 0) {
-            for(let i = 0; i < obj.mult; i++) {
-                let check = true;
-                for (let j = 0; j < obj.mult; j++) { 
+            for(var i = 0; i < obj.mult; i++) {
+                var check = true;
+                for (var j = 0; j < obj.mult; j++) { 
                     if (j == i && check) { 
                         exp += obj.pick;
                         j += obj.pick.length;
@@ -112,8 +112,8 @@ let generationRegExp = function() {
         } 
 
         //граничная часть выражения
-        let boundariesOfExp = "(";
-        for (let i = 0; i < +obj.mult; i++) {
+        var boundariesOfExp = "(";
+        for (var i = 0; i < +obj.mult; i++) {
             boundariesOfExp += anySymbol; 
         }
         boundariesOfExp += ")*";
@@ -131,7 +131,7 @@ let generationRegExp = function() {
 };
 
 //функция для генерации цепочек
-let generationChains = function(reg, range) {
+var generationChains = function(reg, range) {
     var res = [];
     var cur = [];
 
@@ -218,22 +218,105 @@ let generationChains = function(reg, range) {
     return res;
 };
 
+var checkRegForCorrect = function(reg, alph) {
+    var nesting = 0; //вложенность
+    var symbols = reg.match(/[a-zA-Zа-яА-Я]+/g);
+    var error = {
+        message: "",
+        status: false
+    };
+
+    symbols.forEach((item) => {
+        if (alph.indexOf(item) == -1 || reg[i] != '+' || reg[i] != '*' || reg[i] != '(' || reg[i] != ')') {
+           error.message = 'Регулярное выражение содержит недопустимые символы.';
+           error.status = true;
+        }
+    });
+    
+    if (error.status) {
+        return error;
+    }
+
+    for (var i = 0; i < reg.length; i++) {
+        if (nesting > 2) {
+            error.mesage = "Слишком большая вложенность.";
+            error.status = true;
+            return error;   
+        } else {
+            if (reg[i] == '(') {
+                nesting++;
+            } else if (reg[i] == ')') {
+                nesting--;
+            }    
+
+            if ((i == 0 || i == reg.length) && reg[i] == '+') {
+                error.message = 'Символ исключения не может находиться в начале или в конце регулярного выражения.';
+                error.status = true;
+                return error;
+            }
+
+            if ((reg[i] == '+' || reg[i] == '*') && (reg[i + 1] == '+' || reg[i + 1] == '*') || 
+                (reg[i] == '+' || reg[i] == '*') && (reg[i - 1] == '+' || reg[i - 1] == '*') ||
+                 reg[i] == '+' && (reg[i - 1] == '(' || reg[i + 1] == ')')) {
+                error.message = "Данная последовательность операторов недопустима в регулярном выражении.";
+                error.status = true;
+                return error;
+            }
+        }    
+    }
+
+};
+
+var clearFields = function() {
+    document.getElementsByClassName('input-alphabet')[0].value = "";
+    document.getElementsByClassName('input-multiplicity')[0].value = "";
+    document.getElementsByClassName('input-pickAp')[0].value = "";
+    document.getElementById('area-exp').value = "";
+    document.getElementById('area-conv').value = "";
+    document.getElementsByClassName('range')[0].value = ""; 
+    document.getElementsByClassName('range')[1].value = "";
+};
+
 window.onload = function() {
-    const genBtnReg = document.getElementsByClassName('btn-gen reg')[0];
-    const genBtnChains = document.getElementsByClassName('btn-gen chains')[0];
-    const tskBtn = document.getElementsByClassName('choice-btn task')[0];
-    const closeBtn = document.getElementsByClassName('close-win')[0];
-    //const multInp = document.getElementsByClassName('input-multiplicity')[0];
+    var genBtnReg = document.getElementsByClassName('btn-gen reg')[0];
+    var genBtnChains = document.getElementsByClassName('btn-gen chains')[0];
+
+    var tskBtn = document.getElementsByClassName('choice-btn task')[0];
+    var atrBtn = document.getElementsByClassName('choice-btn author')[0];
+    var tmeBtn = document.getElementsByClassName('choice-btn theme')[0];
+
+    var closeBtn = document.getElementsByClassName('close-win');
+    //var multInp = document.getElementsByClassName('input-multiplicity')[0];
     //console.log(genBtn);
     tskBtn.onclick = function() {
         document.getElementById('task-form').style.display = "";
         document.getElementById('main-form').style.display = "none";
+        document.getElementById('author-form').style.display = "none";
+        document.getElementById('theme-form').style.display = "none";
     };
 
-    closeBtn.onclick = function() {
-        document.getElementById('task-form').style.display = "none";
-        document.getElementById('main-form').style.display = "";
+    atrBtn.onclick = function() {
+        document.getElementById('author-form').style.display = "";
+        document.getElementById('theme-form').style.display = "none";
     };
+
+    tmeBtn.onclick = function() {
+        document.getElementById('theme-form').style.display = "";
+        document.getElementById('author-form').style.display = "none";
+    };
+
+    for(var i = 0; i < closeBtn.length; i++) {
+        closeBtn[i].onclick = function(event) {
+            var target = event.target;
+            //document.getElementById('task-form').style.display = "none";
+            if (target.parentNode.id == "task-form") {
+                clearFields();
+            }
+            target.parentNode.style.display = "none";
+            document.getElementById('main-form').style.display = "";
+        };    
+    }
+    
 
     genBtnReg.onclick = function(event) {
         //console.log(generationRegExp());
@@ -246,31 +329,43 @@ window.onload = function() {
     };
 
     genBtnChains.onclick = function() {
-        const areaExp = document.getElementById('area-exp');
-        const areaConv = document.getElementById('area-conv');
-        const range = [+document.getElementsByClassName('range')[0].value, +document.getElementsByClassName('range')[1].value];
-        let obj = parseDataFromInput();
-
-        console.log(areaExp.innerHTML + ' - ' + range[1]);
+        var areaExp = document.getElementById('area-exp');
+        var areaConv = document.getElementById('area-conv');
+        var range = [+document.getElementsByClassName('range')[0].value, +document.getElementsByClassName('range')[1].value];
+        var checkDataFromFields = parseDataFromInput();
+        areaConv.value = "";
+        
+        // console.log(areaExp.innerHTML + ' - ' + range[1]);
         //вывод цепочек в указанном диапазоне и указанных условиях вывода, а также проверка на валидность данных
-        if (obj.check == undefined) {
-            if (areaExp.value.length != 0) {
-                const chains = generationChains(areaExp.value, range[1]).sort((a, b) => {
-                    return a.length - b.length;
-                });
+        if (checkDataFromFields.check == undefined && areaExp.value.length != 0) {
+            var checkReg = checkRegForCorrect(areaExp.value, checkDataFromFields.alph);
+            console.log(checkRegForCorrect(areaExp.value, checkDataFromFields.alph));
+            if (!checkReg.status) {
+                if (range[0] < range[1] && range[0] >= 0 && range[1] > 0) {
+                    var chains = generationChains(areaExp.value, range[1]).sort((a, b) => {
+                        return a.length - b.length;
+                    });
 
-                console.log(chains);
-                for(let i = 0; i < chains.length; i++) {
-                    if (chains[i].length >= range[0] && 
-                        chains[i].length <= range[1] && 
-                        chains[i].length % obj.mult == 0 && 
-                        chains[i].indexOf(obj.pick) != -1) {
-                        areaConv.value += chains[i] + '\n';
+                    //условия вывода цепочек
+                    var finChains = [];
+                    for(var i = 0; i < chains.length; i++) {
+                        if (chains[i].length >= range[0] && chains[i].length <= range[1] && 
+                            chains[i].length % checkDataFromFields.mult == 0 && chains[i].indexOf(checkDataFromFields.pick) != -1) {
+                            
+                            if (finChains.indexOf(chains[i]) == -1) {
+                                finChains.push(chains[i]);
+                                areaConv.value += chains[i] + '\n';
+                            }
+                        }
                     }
+                } else {
+                    alert("Некорректный диапазон длин цепочек.")
                 }
+            } else {
+                alert(checkReg.message);
             }
         } else {
-            alert(obj.message);
+            alert(checkDataFromFields.message);
         }
     };
 };
