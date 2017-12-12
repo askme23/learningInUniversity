@@ -6,16 +6,19 @@
     <link href="style.css" rel="stylesheet">
 </head>
 <body>
+    <!-- главная форма -->
     <form id="main-form">
         <span>Меню</span>
         <div>
             <input type="button" class="choice-btn theme" value="Тема">
             <input type="button" class="choice-btn task" value="Расчеты">
             <input type="button" class="choice-btn author" value="Автор">
+            <input type="button" class="choice-btn reference" value="Справка">
         </div>
         <!-- <input type="button" class="choice-btn">   -->
     </form>
 
+    <!-- форма с расчетами -->
     <form id="task-form" style="display: none;">
         <div class="container">
             <label>
@@ -48,20 +51,22 @@
             <input type="button"  class="btn-gen chains" value="Ген.цепочки">
         </label>
 
-        <textarea name="conv" id="area-conv" class="print-chains"></textarea>
+        <textarea name="conv" id="area-conv" class="print-chains" readonly></textarea>
 
         <input type="button" class="close-win">
     </form>
 
+    <!-- форма с информаций об авторе -->
     <form id="author-form" style="display: none;">
         <p>Студент группы ИП-413, факультета ИВТ - Горелов Руслан Сергеевич</p>
         <a href="https://github.com/askme23" target="_blank">
-            <img src="GitHub-Mark-32px.png" alt="github">
+            <img src="images/GitHub-Mark-32px.png" alt="github">
             GitHub
         </a>
         <input type="button" class="close-win">    
     </form>
 
+    <!-- форма с ифнормацией о теме курсовой работы -->
     <form id="theme-form" style="display: none;">
         <p>
             Написать программу, которая по предложенному описанию языка построит регулярное
@@ -69,11 +74,31 @@
             заданном диапазоне длин. Предусмотреть также возможность генерации цепочек по
             введённому пользователем РВ (в рамках варианта). 
         </p>
-        <h5>Вариант <b>(7)</b></h5>
+        <h4>Вариант <b>(7)</b></h4>
         <p>
             Алфавит, кратность длины и заданная фиксированная подцепочка всех цепочек языка.
         </p>
         <input type="button" class="close-win">   
+    </form>
+
+    <form id="ref-form" style="display: none;">
+        <ul>
+            <li>В поле <b>Алфавит</b> можно вводить любые символы, но в качестве разделителей могут быть только следующие : <b>",.|\ -"</b>.</li>
+            <li>В поле <b>Кратность</b> вводятся только числовые данные.</li>
+            <li>В поле <b>Фиксированная подцепочка</b> вводится подцепочка, содержащая символы, которые были заданые в поле <i>Алфавит</i>.</li>
+            <li>
+                В текстовой областе, которая находится после полей, которые описаны выше выводится регулярное выражени. Также в 
+                данном поле можено редактировать регулярное выражение, для дальнейшего генерирования цепочек по нему.
+            </li>
+            <li>В полях задания диапазона вводятся числовые данные, при том, что в поле <b>c</b> число должно быть меньше, чем в поле <b>по</b>.</li>
+            <li>В последней текстовой области будут выводиться все сгенерированные цепочки по регулярному выраженю.</li>
+            <h3 style="text-align: center;">Важное замечание</h3>
+            <li>Если вы хотите ввести свое регулярное выражение и построить все цепочки, то также необходимо внести изменения в поле
+                <b>Алфавит</b>(если имеются символы, не входящие в существующий алфавит), поле <b>Кратность</b>(опционально), а
+                также в поле <b>Фиксированная подцепочка</b>(также будет зависеть от алфавита).
+            </li>
+        </ul>
+        <input type="button" class="close-win">
     </form>
     
     <script src="script.js"></script>

@@ -64,7 +64,6 @@ var parseDataFromInput = function() {
 
 var generationRegExp = function() {
     var obj = parseDataFromInput();
-    console.log(obj);
     if (obj.check == undefined) {
         var exp = "";
         var lengthOfRest = obj.mult - obj.pick.length;
@@ -117,7 +116,7 @@ var generationRegExp = function() {
             boundariesOfExp += anySymbol; 
         }
         boundariesOfExp += ")*";
-        console.log(boundariesOfExp);
+        //console.log(boundariesOfExp);
         if (obj.pick.length == 0) {
             exp = boundariesOfExp;
         } else {
@@ -132,10 +131,10 @@ var generationRegExp = function() {
 
 //функция для генерации цепочек
 var generationChains = function(reg, range) {
-    var res = [];
-    var cur = [];
+    var result = [];
+    var current = [];
 
-    cur.push("");
+    current.push("");
     for (var i = 0; i < reg.length; ++i) {
         if (reg[i] == '(') {
             var d = 0;//счетчик
@@ -164,61 +163,61 @@ var generationChains = function(reg, range) {
             //console.log(rep)
 
             
-            var inc = generationChains(next.substring(1, next.length - 1), range);
-            var newcur = [];
+            var include = generationChains(next.substring(1, next.length - 1), range);
+            var recurrent = [];
             if (rep) {
-                var newinc = [];
-                newinc.push("");
+                var recInclude = [];
+                recInclude.push("");
                 var add = true;
 
                 while (add) {
                     add = false;
-                    for (var j = 0; j < inc.length; ++j) {
-                        for (var k = 0; k < newinc.length; ++k) {
-                            var newstr = newinc[k] + inc[j];
+                    for (var j = 0; j < include.length; ++j) {
+                        for (var k = 0; k < recInclude.length; ++k) {
+                            var newStr = recInclude[k] + include[j];
 
-                            if (newstr.length <= range && newinc.indexOf(newstr) == -1) {
-                                newinc.push(newstr);
+                            if (newStr.length <= range && recInclude.indexOf(newStr) == -1) {
+                                recInclude.push(newStr);
                                 add = true;
                             }
                         }
                     }
                 }
-                inc = newinc;
+                include = recInclude;
 
             }
 
-            for (var j = 0; j < inc.length; ++j) {
-                for (var k = 0; k < cur.length; ++k) {
-                    var newstr = cur[k] + inc[j];
-                    if (newstr.length <= range) {
-                        newcur.push(newstr);
+            for (var j = 0; j < include.length; ++j) {
+                for (var k = 0; k < current.length; ++k) {
+                    var newStr = current[k] + include[j];
+                    if (newStr.length <= range) {
+                        recurrent.push(newStr);
                     }
                 }
             }
 
-            cur = newcur;
+            current = recurrent;
         } else if (reg[i] == '+') {
-            cur.forEach((item) => {
-                res.push(item);
+            current.forEach((item) => {
+                result.push(item);
             });
-            //console.log(res);
-            cur = [];
-            cur.push("");
+            //console.log(result);
+            current = [];
+            current.push("");
         } else {
-            for (var j = 0; j < cur.length; ++j)
-                cur[j] += reg[i];
+            for (var j = 0; j < current.length; ++j)
+                current[j] += reg[i];
         }
     }
-    cur.forEach((item) => {
-        res.push(item);
+    current.forEach((item) => {
+        result.push(item);
     });
-    cur = [];
+    current = [];
 
-    return res;
+    return result;
 };
 
-var checkRegForCorrect = function(reg, alph) {
+var checkRegForCorrect = function(reg, alph, pick) {
     var nesting = 0; //вложенность
     var symbols = reg.match(/[a-zA-Zа-яА-Я]+/g);
     var error = {
@@ -226,18 +225,13 @@ var checkRegForCorrect = function(reg, alph) {
         status: false
     };
 
-    symbols.forEach((item) => {
-        if (alph.indexOf(item) == -1 || reg[i] != '+' || reg[i] != '*' || reg[i] != '(' || reg[i] != ')') {
-           error.message = 'Регулярное выражение содержит недопустимые символы.';
-           error.status = true;
-        }
-    });
-    
-    if (error.status) {
-        return error;
-    }
-
     for (var i = 0; i < reg.length; i++) {
+        if (reg[i] != '+' && reg[i] != '*' && reg[i] != '(' && reg[i] != ')' && alph.indexOf(reg[i]) == -1) {
+            error.message = 'Регулярное выражение содержит недопустимые символы.';
+            error.status = true;
+            
+            return error;
+        }
         if (nesting > 2) {
             error.mesage = "Слишком большая вложенность.";
             error.status = true;
@@ -265,6 +259,7 @@ var checkRegForCorrect = function(reg, alph) {
         }    
     }
 
+    return error;
 };
 
 var clearFields = function() {
@@ -284,25 +279,33 @@ window.onload = function() {
     var tskBtn = document.getElementsByClassName('choice-btn task')[0];
     var atrBtn = document.getElementsByClassName('choice-btn author')[0];
     var tmeBtn = document.getElementsByClassName('choice-btn theme')[0];
-
+    var refBtn = document.getElementsByClassName('choice-btn reference')[0];
     var closeBtn = document.getElementsByClassName('close-win');
-    //var multInp = document.getElementsByClassName('input-multiplicity')[0];
-    //console.log(genBtn);
+
     tskBtn.onclick = function() {
         document.getElementById('task-form').style.display = "";
         document.getElementById('main-form').style.display = "none";
         document.getElementById('author-form').style.display = "none";
         document.getElementById('theme-form').style.display = "none";
+        document.getElementById('ref-form').style.display = "none";
     };
 
     atrBtn.onclick = function() {
         document.getElementById('author-form').style.display = "";
         document.getElementById('theme-form').style.display = "none";
+        document.getElementById('ref-form').style.display = "none";
     };
 
     tmeBtn.onclick = function() {
         document.getElementById('theme-form').style.display = "";
         document.getElementById('author-form').style.display = "none";
+        document.getElementById('ref-form').style.display = "none";
+    };
+
+    refBtn.onclick = function() {
+        document.getElementById('ref-form').style.display = "";
+        document.getElementById('author-form').style.display = "none";
+        document.getElementById('theme-form').style.display = "none";
     };
 
     for(var i = 0; i < closeBtn.length; i++) {
@@ -321,9 +324,9 @@ window.onload = function() {
     genBtnReg.onclick = function(event) {
         //console.log(generationRegExp());
         if (generationRegExp()) {
-            document.getElementById('area-exp').innerHTML = generationRegExp(); 
+            document.getElementById('area-exp').value = generationRegExp(); 
         } else {
-            document.getElementById('area-exp').innerHTML = ""; 
+            document.getElementById('area-exp').value = ""; 
         }
         // console.log(document.getElementById('area-exp'));
     };
@@ -338,8 +341,8 @@ window.onload = function() {
         // console.log(areaExp.innerHTML + ' - ' + range[1]);
         //вывод цепочек в указанном диапазоне и указанных условиях вывода, а также проверка на валидность данных
         if (checkDataFromFields.check == undefined && areaExp.value.length != 0) {
-            var checkReg = checkRegForCorrect(areaExp.value, checkDataFromFields.alph);
-            console.log(checkRegForCorrect(areaExp.value, checkDataFromFields.alph));
+            var checkReg = checkRegForCorrect(areaExp.value, checkDataFromFields.alph, checkDataFromFields.pick);
+
             if (!checkReg.status) {
                 if (range[0] < range[1] && range[0] >= 0 && range[1] > 0) {
                     var chains = generationChains(areaExp.value, range[1]).sort((a, b) => {

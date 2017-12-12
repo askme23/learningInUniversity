@@ -109,7 +109,7 @@ form {
 }
 
 .close-win {
-    background-image: url(close.png);
+    background-image: url(images/close.png);
     background-size: contain;
     position: absolute;
     box-shadow: none;
@@ -154,8 +154,15 @@ form {
 
 #theme-form {
     width: 480px;
-    height: 250px;
+    height: 270px;
     text-align: center;
+    font-size: 18px;
+}
+
+#ref-form {
+    width: 680px;
+    min-height: 350px;
+    text-align: left;
     font-size: 18px;
 }
 
