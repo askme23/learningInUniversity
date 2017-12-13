@@ -17,6 +17,14 @@ var parseDataFromInput = function() {
         "message": ""
     };
 
+    for(var k = 0; k < alph.length; k++) {
+        if (alph[k] == '+' || alph[k] == '*' || alph[k] == '(' || alph[k] == ')') {
+            errors.message = "В алфавите не могут быть управляющие символы.";
+
+            return errors;
+        }
+    }
+
     var items = pick.split('');
     for (var i = 0; i < items.length; i++) {
         if (alph.indexOf(items[i]) == -1) {
@@ -225,6 +233,17 @@ var checkRegForCorrect = function(reg, alph, pick) {
         status: false
     };
 
+    // console.log(alph);
+    // console.log(symbols);
+    // for(var k = 0; k < symbols.length; k++) {
+    //     if (alph.indexOf(symbols[k]) == -1) {
+    //         error.message = "В регуллярном выражении присутствуют символы, которых нет в алфавите.";
+    //         error.status = true;
+
+    //         return true;
+    //     }
+    // }
+
     for (var i = 0; i < reg.length; i++) {
         if (reg[i] != '+' && reg[i] != '*' && reg[i] != '(' && reg[i] != ')' && symbols.indexOf(reg[i]) == -1) {
             error.message = 'Регулярное выражение содержит недопустимые символы.';
@@ -233,9 +252,10 @@ var checkRegForCorrect = function(reg, alph, pick) {
             return error;
         }
 
-        if (nesting > 2) {
-            error.mesage = "Слишком большая вложенность.";
+        if (nesting > 3) {
+            error.message = "Слишком большая вложенность.";
             error.status = true;
+
             return error;   
         } else {
             if (reg[i] == '(') {
@@ -250,14 +270,22 @@ var checkRegForCorrect = function(reg, alph, pick) {
                 return error;
             }
 
-            if ((reg[i] == '+' || reg[i] == '*') && (reg[i + 1] == '+' || reg[i + 1] == '*') || 
-                (reg[i] == '+' || reg[i] == '*') && (reg[i - 1] == '+' || reg[i - 1] == '*') ||
+            if ((reg[i] == '+') && (reg[i + 1] == '+' || reg[i + 1] == '*') || 
+                // (reg[i] == '+' || reg[i] == '*') && (reg[i - 1] == '+' || reg[i - 1] == '*') ||
                  reg[i] == '+' && (reg[i - 1] == '(' || reg[i + 1] == ')')) {
                 error.message = "Данная последовательность операторов недопустима в регулярном выражении.";
                 error.status = true;
                 return error;
             }
         }    
+    }
+
+    if (nesting != 0) {
+        // console.log('егор - пидор');
+        error.message = "Некорректное регулярное выражение";
+        error.status = true;
+
+        return error;
     }
 
     return error;
@@ -273,6 +301,11 @@ var clearFields = function() {
     document.getElementsByClassName('range')[1].value = "";
 };
 
+var hideDownloadLink = function(element) {
+    element.target.parentNode.style.display = "none";
+    element.target.parentNode.innerHTML = "";
+}
+
 window.onload = function() {
     var genBtnReg = document.getElementsByClassName('btn-gen reg')[0];
     var genBtnChains = document.getElementsByClassName('btn-gen chains')[0];
@@ -282,6 +315,9 @@ window.onload = function() {
     var tmeBtn = document.getElementsByClassName('choice-btn theme')[0];
     var refBtn = document.getElementsByClassName('choice-btn reference')[0];
     var closeBtn = document.getElementsByClassName('close-win');
+
+    var checkFile = document.getElementsByClassName('chbx-file')[0];
+    var changedFile = document.getElementById('file');
 
     tskBtn.onclick = function() {
         document.getElementById('task-form').style.display = "";
@@ -309,6 +345,39 @@ window.onload = function() {
         document.getElementById('theme-form').style.display = "none";
     };
 
+    checkFile.onclick = function(event) {
+        if (event.target.checked) {
+            document.getElementById('file').style.display = "";
+        } else {
+            document.getElementById('file').style.display = "none";
+        }
+
+    };
+
+    changedFile.onchange = function(event) {
+        var file = event.target.files[0];
+        
+        if (file.type == 'text/plain') {
+            var reader = new FileReader();
+            reader.readAsText(file);
+
+            //дейсвтия после загрузки файла
+            reader.onload = function() {
+                var dataAfterParsing = reader.result.split('\n');
+                for(var i = 0; i < dataAfterParsing.length; i++) {
+                    dataAfterParsing[i] = dataAfterParsing[i].replace(' ', '').split('-');
+                    dataAfterParsing[i][1] = dataAfterParsing[i][1].replace(/\|*\s*/g, '');
+                }
+
+                document.getElementsByClassName('input-alphabet')[0].value = dataAfterParsing[0][1];
+                document.getElementsByClassName('input-multiplicity')[0].value = dataAfterParsing[1][1];
+                document.getElementsByClassName('input-pickAp')[0].value = dataAfterParsing[2][1];
+
+                console.log(dataAfterParsing);
+            };
+        }
+    };
+
     for(var i = 0; i < closeBtn.length; i++) {
         closeBtn[i].onclick = function(event) {
             var target = event.target;
@@ -324,8 +393,21 @@ window.onload = function() {
 
     genBtnReg.onclick = function(event) {
         //console.log(generationRegExp());
+        var writeToFile = document.getElementsByClassName('download-file')[0];
+
         if (generationRegExp()) {
-            document.getElementById('area-exp').value = generationRegExp(); 
+            var tempResult = generationRegExp();
+
+            document.getElementById('area-exp').value = tempResult;
+            
+            //запись в файл
+            if (document.getElementsByClassName('task-chkb')[1].checked) {
+                writeToFile.style.display = "";
+                writeToFile.innerHTML +=  
+                '<a href="data:text/plain;charset=utf-8,%EF%BB%BF' + 
+                encodeURIComponent(tempResult) + 
+                '" download="regExp.txt" onclick="hideDownloadLink(event);" style="text-decoration: none; color: #333;">Скачать результаты</a>';
+            }
         } else {
             document.getElementById('area-exp').value = ""; 
         }
@@ -341,7 +423,8 @@ window.onload = function() {
         
         // console.log(areaExp.innerHTML + ' - ' + range[1]);
         //вывод цепочек в указанном диапазоне и указанных условиях вывода, а также проверка на валидность данных
-        if (checkDataFromFields.check == undefined && areaExp.value.length != 0) {
+        //checkDataFromFields.check == undefined && 
+        if (areaExp.value.length != 0) {
             var checkReg = checkRegForCorrect(areaExp.value, checkDataFromFields.alph, checkDataFromFields.pick);
             console.log(checkReg);
             if (!checkReg.status) {
@@ -352,13 +435,25 @@ window.onload = function() {
 
                     //условия вывода цепочек
                     var finChains = [];
+                    var writeToFileChains = document.getElementsByClassName('download-file')[1];
+                    var tempChains = "";
+
                     for(var i = 0; i < chains.length; i++) {
                         if (chains[i].length >= range[0] && chains[i].length <= range[1]) {
                             if (finChains.indexOf(chains[i]) == -1) {
                                 finChains.push(chains[i]);
                                 areaConv.value += chains[i] + '\n';
+                                tempChains += chains[i] + '\n';
                             }
                         }
+                    }
+
+                    if (document.getElementsByClassName('task-chkb')[2].checked) {
+                        writeToFileChains.style.display = "";
+                        writeToFileChains.innerHTML +=  
+                        '<a href="data:text/plain;charset=utf-8,%EF%BB%BF' + 
+                        encodeURIComponent(tempChains) + 
+                        '" download="chains.txt" onclick="hideDownloadLink(event);" style="text-decoration: none; color: #333;">Скачать результаты</a>';
                     }
                 } else {
                     alert("Некорректный диапазон длин цепочек.")
@@ -367,7 +462,8 @@ window.onload = function() {
                 alert(checkReg.message);
             }
         } else {
-            alert(checkDataFromFields.message);
+            //alert(checkDataFromFields.message);
+            alert("Невозможно построить цепочки по данному регулярному выражению.");
         }
     };
 };

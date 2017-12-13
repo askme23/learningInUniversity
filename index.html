@@ -20,39 +20,61 @@
 
     <!-- форма с расчетами -->
     <form id="task-form" style="display: none;">
-        <div class="container">
-            <label>
-                <p>Алфавит</p>
-                <input type="text" class="input-alphabet">
-            </label>
+        <div class="calculation-blocks">
+            <div id="change-file">
+                <label>
+                    Выгрузка из файла
+                    <input type="checkbox" class="task-chkb chbx-file">
+                </label>
+                <input type="file" id="file" name="files[]" style="display: none;">
+            </div>
+
+            <div class="container">
+                <label>
+                    <p>Алфавит</p>
+                    <input type="text" class="input-alphabet">
+                </label>
+            </div>
+            <div class="container">
+                <label>
+                    <p>Кратность длины</p>
+                    <input type="text" class="input-multiplicity">
+                </label>
+            </div>
+            <div class="container">
+                <label>
+                    <p>Фиксированная подцепочка</p>
+                    <input type="text" class="input-pickAp">
+                </label>
+            </div>
+            <div class="container">
+                <label>
+                    <p>Записать в файл</p>
+                    <input type="checkbox" class="task-chkb">
+                </label>
+            </div>
+            <input type="button" class="btn-gen reg" value="Сгенерировать">
+            <span class="download-file" style="display: none;"></span>
+            <!-- <label for="">
+                <input type="text">
+            </label> -->
+            <textarea name="exp" id="area-exp" class="print-chains"></textarea>
         </div>
-        <div class="container">
+        <div class="calculation-blocks">
             <label>
-                <p>Кратность длины</p>
-                <input type="text" class="input-multiplicity">
+                Диапазон длин
+                с <input type="text"  class="range" style="width: 30px">
+                по <input type="text" class="range" style="width: 30px; margin-right: 15px;"> 
             </label>
-        </div>
-        <div class="container">
             <label>
-                <p>Фиксированная подцепочка</p>
-                <input type="text" class="input-pickAp">
+                <span> Записать в файл</span>
+                <input type="checkbox" class="task-chkb">
             </label>
-        </div>
-        <input type="button" class="btn-gen reg" value="Сгенерировать">
-        <!-- <label for="">
-            <input type="text">
-        </label> -->
-        <textarea name="exp" id="area-exp" class="print-chains"></textarea>
-        <br/>
-        <label>
-            Диапазон длин
-            с <input type="text"  class="range" style="width: 30px">
-            по <input type="text" class="range"   style="width: 30px; margin-right: 15px;">
             <input type="button"  class="btn-gen chains" value="Ген.цепочки">
-        </label>
+            <span class="download-file" style="display: none;"></span>
 
-        <textarea name="conv" id="area-conv" class="print-chains" readonly></textarea>
-
+            <textarea name="conv" id="area-conv" class="print-chains" readonly></textarea>
+        </div>
         <input type="button" class="close-win">
     </form>
 
@@ -93,9 +115,8 @@
             <li>В полях задания диапазона вводятся числовые данные, при том, что в поле <b>c</b> число должно быть меньше, чем в поле <b>по</b>.</li>
             <li>В последней текстовой области будут выводиться все сгенерированные цепочки по регулярному выраженю.</li>
             <h3 style="text-align: center;">Важное замечание</h3>
-            <li>Если вы хотите ввести свое регулярное выражение и построить все цепочки, то также необходимо внести изменения в поле
-                <b>Алфавит</b>(если имеются символы, не входящие в существующий алфавит), поле <b>Кратность</b>(опционально), а
-                также в поле <b>Фиксированная подцепочка</b>(также будет зависеть от алфавита).
+            <li>Если вы хотите ввести свое регулярное выражение и построить все цепочки, то можете изменить значение уже построенного ре
+                гулярного выражения, либо же задать свое, если текстовая область пустая.
             </li>
         </ul>
         <input type="button" class="close-win">

@@ -60,12 +60,33 @@ form {
 }
 
 #task-form {
-    width: 800px;
+    width: 820px;
     min-height: 360px;
     box-shadow: 0 1px 5px rgba(0,0,0,0.12), 0 1px 5px rgba(0,0,0,0.24);
     padding: 30px;
+    padding-top: 50px;
     overflow: auto;
-    position: relative;
+}
+
+#task-form .calculation-blocks {
+    margin-bottom: 20px;
+    border: 4px dashed #aaa;
+    padding: 20px;
+}
+
+#task-form .container {
+    width: 200px;
+    text-align: center;
+    margin: 0 20px 10px 0;
+    display: inline-block;
+}
+
+#task-form .container:nth-child(3) {
+    width: 100px;
+}
+
+#task-form .container:nth-child(5) {
+    width: 50px;
 }
 
 #task-form input[type="text"] {
@@ -76,23 +97,16 @@ form {
     padding: 3px;
     text-align: center;
     margin-bottom: 10px;
+    width: 100%;
 }
 
-#task-form .container {
-    width: 200px;
-    text-align: center;
-    margin: 0 10px 10px 0;
-    display: inline-block;
-}
 
 #task-form .btn-gen {
     font-family: 'Roboto Mono', Arial, Helvetica, sans-serif;
     font-size: 14px;
     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
     border: none;
-    padding: 10px;
-    padding-left: 10px;
-    padding-right: 10px;
+    padding: 7px;
     margin-bottom: 10px;
     transition: all;
     cursor: pointer;
@@ -106,6 +120,38 @@ form {
     max-width: 100%;
     min-width: 100%;
     min-height: 190px;
+}
+
+#task-form #change-file {
+    min-height: 35px;
+}
+
+#task-form .task-chkb {
+    font-family: 'Roboto Mono', Arial, Helvetica, sans-serif;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    border: none;
+    padding: 7px;
+}
+
+#task-form #file {
+    font-family: 'Roboto Mono', Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    border: none;
+    padding: 5px;
+    cursor: pointer;
+}
+
+#task-form .download-file {
+    font-size: 14px;
+    display: inline-block;
+    padding: 5px;
+    cursor: pointer;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    text-decoration: none;
+    color: #333;
+    background-color: rgb(221, 221, 221);
+    margin: 0 auto 10px auto;
 }
 
 .close-win {
@@ -161,7 +207,7 @@ form {
 
 #ref-form {
     width: 680px;
-    min-height: 350px;
+    min-height: 330px;
     text-align: left;
     font-size: 18px;
 }
