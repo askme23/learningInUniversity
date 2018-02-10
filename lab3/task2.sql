@@ -13,11 +13,13 @@ BEGIN
     END IF;
     
     RETURN(str);
+EXCEPTION when others then
+    str := 'FALSE';
+    return(str);
 END;
 /
+
 BEGIN
-    DBMS_OUTPUT.put_line(show_boll());
-    DBMS_OUTPUT.put_line(show_boll(TRUE));
+    DBMS_OUTPUT.put_line(show_bool());
+    DBMS_OUTPUT.put_line(show_bool(false));
 END;
-/
-    SELECT show_boll(FALSE) FROM dual;
