@@ -7,6 +7,8 @@ create table ord_of_sal(
     n_summ NUMBER
 );
 
+alter table ord_of_sal add constraint ord_of_sal_pk_id primary key (n_id) enable;
+
 create sequence new_val increment by 2
     start with 5000;
 /
