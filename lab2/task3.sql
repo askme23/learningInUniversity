@@ -1,4 +1,5 @@
-select max(decode(o.snum, 1001, o.amt, null)),
+select s.sname,
+       max(decode(o.snum, 1001, o.amt, null)),
        max(decode(o.snum, 1002, o.amt, null)),
        max(decode(o.snum, 1003, o.amt, null)),
        max(decode(o.snum, 1004, o.amt, null)),
