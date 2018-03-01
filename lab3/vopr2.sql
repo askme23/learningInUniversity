@@ -1,3 +1,5 @@
+drop table shedule_matrix;
+/
 create or replace package operations_with_matrix is
     procedure create_shedule_matrix;
 end operations_with_matrix;

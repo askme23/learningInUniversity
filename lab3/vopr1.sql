@@ -1,3 +1,5 @@
+drop table Shedule;
+drop sequence cnt;
 create table Shedule(
     id NUMBER not null,
     disc_name varchar2(80),
