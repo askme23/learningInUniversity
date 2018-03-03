@@ -8,8 +8,10 @@ insert into test_transaction
 values (1, 'First record');
 insert into test_transaction
 values (2, 'Second record');
-commit;
+grant select on test_transaction to up1;
 
-delete test_transaction
-where n_id = 2;
-rollback;
+--commit;
+--
+--delete test_transaction
+--where n_id = 2;
+--rollback;
