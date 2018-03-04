@@ -15,7 +15,7 @@ begin
     end if;
 
 exception 
-    when s_owner then
+    when owner_error then
         dbms_output.put_line('Данный пользователь не является владельцем таблицы CASH_MACHINE и соответственно не может удалять банкоматы.');
     when others then
         dbms_output.put_line('Ошибка при попытке удаления.');

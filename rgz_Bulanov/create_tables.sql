@@ -1,5 +1,5 @@
-drop table BANKS;
-drop table CASH_MACHINE;
+drop table BANKS CASCADE CONSTRAINTS;
+drop table CASH_MACHINE CASCADE CONSTRAINTS;
 
 -- создание таблицы банков
 create table BANKS (
