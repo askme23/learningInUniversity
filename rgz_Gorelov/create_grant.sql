@@ -1,0 +1,2 @@
+grant select on RESTAURANTS_AND_QUIPMENT to PUBLIC;
+grant execute on PKG_CHANGE_DATA.INCREASE_COST to UP1;
