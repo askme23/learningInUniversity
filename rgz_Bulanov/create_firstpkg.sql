@@ -53,6 +53,7 @@ create or replace package body PKG_CHANGE_TABLES is
 
         commit;
     exception when others then
+        -- неважно что произойдет, любая ошибка должна вызывать откат транзакции
         rollback;
     end ADD;
 
@@ -64,6 +65,7 @@ create or replace package body PKG_CHANGE_TABLES is
 
         dbms_output.put_line('Таблицы BANKS и CASH_MACHINE очищены.');
     exception when others then
+        -- любая ошибка должна вызывать откат транзакции
         rollback;
     end DEL;
 end PKG_CHANGE_TABLES;

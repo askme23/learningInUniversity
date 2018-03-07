@@ -24,6 +24,7 @@ create or replace package body PKG_CHANGE_DATA is
         commit;
 
     exception when others then
+        -- неважно какая ошибка, после ее возбуждения необходимо откатить транзакцию
         rollback;
     end DEL_CASH_MACHINE;
 
@@ -54,7 +55,10 @@ create or replace package body PKG_CHANGE_DATA is
             c_city := bank_count.NEXT(c_city);
         end loop;        
 
-    exception when NO_DATA_FOUND then
-        dbms_output.put_line('Отсутствуют данные в таблице BANK.');
+    exception 
+        when VALUE_ERROR then
+            dbms_output.put_line('Неправильное преобразование типов.');
+        when NO_DATA_FOUND then
+            dbms_output.put_line('Отсутствуют данные в таблице BANK.');
     end PRINT_CNT_MCASH;
 end PKG_CHANGE_DATA;

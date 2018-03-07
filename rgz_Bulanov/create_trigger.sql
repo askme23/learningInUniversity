@@ -1,6 +1,5 @@
 create or replace trigger CHECK_ON_OWNER
 before insert on CASH_MACHINE
-for each row
 declare
     s_owner TABLE_PRIVILEGES.OWNER%type;
     owner_error exception;
