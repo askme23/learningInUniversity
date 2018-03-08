@@ -20,12 +20,13 @@ create or replace package body PKG_CHANGE_DATA is
     begin
         update TECH_EQUIP
            set N_COST = N_COST * 0.1 + N_COST
-        where REST_ID = (select r.ID
-                           from RESTAURANTS r
-                          where r.REST_NAME = REST);
+         where REST_ID = (select r.ID
+                            from RESTAURANTS r
+                           where r.REST_NAME = REST);
         commit;
 
     exception when others then
+        -- при возникновении любой ошибки откатываем транзакцию
         rollback;
     end INCREASE_COST;
 -------------------------------------------------------
@@ -48,7 +49,7 @@ create or replace package body PKG_CHANGE_DATA is
         procedure print_rest (rest res%ROWTYPE) is
         begin
             dbms_output.put_line('Ресторна - ' || rest.REST_NAME || ' количество оборудования - ' || rest.cnt || ' общая стоимость - ' || rest.summ);
-        end;
+        end print_rest;
     begin
         open res;
             fetch res into r_rest;

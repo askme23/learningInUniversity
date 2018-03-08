@@ -53,6 +53,7 @@ create or replace package body PKG_CHANGE_TABLES is
 
         commit;
     exception when others then
+        -- при любой ошибки откатываем транзакцию
         rollback;
     end ADD;
 
@@ -64,6 +65,7 @@ create or replace package body PKG_CHANGE_TABLES is
 
         dbms_output.put_line('Таблицы RESTAURANTS и TECH_EQUIP очищены.');
     exception when others then
+        -- аналогично, при любой ошибке октатываем транзакцию
         rollback;
     end DEL;
 end PKG_CHANGE_TABLES;
