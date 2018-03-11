@@ -1,3 +1,4 @@
+drop table REG_TABLE;
 create table REG_TABLE as
       select * 
         from PUBLISH;
@@ -8,6 +9,6 @@ create or replace trigger SAVE_CHANGE_PUBLISH
 after update on PUBLISH
 for each row
 begin
-    insert into REG_TABLE(ID, SPR_ID, PUBLISH_NAME)
+    insert into REG_TABLE(ID, SPR_ID, PUBLISH_NAME, FINANS_AMOUNT)
     values(:OLD.ID, :OLD.SPR_ID, :OLD.PUBLISH_NAME, :OLD.FINANS_AMOUNT);
 end;

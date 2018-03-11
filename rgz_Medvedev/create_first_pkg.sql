@@ -59,8 +59,8 @@ create or replace package body PKG_CHANGE_TABLES is
 
     procedure DEL is
     begin
-        delete from SPONSORS;
         delete from PUBLISH;
+        delete from SPONSORS;
         commit;
 
         dbms_output.put_line('Таблицы SPONSORS и PUBLISH очищены.');

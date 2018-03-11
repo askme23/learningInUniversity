@@ -1,2 +1,2 @@
 grant select on SPONSORS_AND_PUBLISH to PUBLIC;
-grant execute on PKG_CHANGE_DATA.INCREASE_COST to UP1;
+grant execute on PKG_CHANGE_DATA.CHANGE_PUBLISH_NAME to UP1;
