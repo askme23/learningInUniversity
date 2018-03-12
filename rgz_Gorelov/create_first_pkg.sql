@@ -53,8 +53,7 @@ create or replace package body PKG_CHANGE_TABLES is
 
         commit;
     exception when others then
-        -- при любой ошибки откатываем транзакцию
-        rollback;
+        raise_application_error(-20001, 'Возникла следующая ошибка со следующим кодом-' || SQLCODE || ' Текст ошибки - ' || SQLERRM);
     end ADD;
 
     procedure DEL is
@@ -65,7 +64,6 @@ create or replace package body PKG_CHANGE_TABLES is
 
         dbms_output.put_line('Таблицы RESTAURANTS и TECH_EQUIP очищены.');
     exception when others then
-        -- аналогично, при любой ошибке октатываем транзакцию
-        rollback;
+        raise_application_error(-20001, 'Возникла следующая ошибка со следующим кодом-' || SQLCODE || ' Текст ошибки - ' || SQLERRM);
     end DEL;
 end PKG_CHANGE_TABLES;

@@ -17,5 +17,5 @@ exception
     when date_error then
         dbms_output.put_line('Изменять стоимость возможно только до 20 числа.');
     when others then
-        dbms_output.put_line('Ошибка при попытке изменения.');
+        raise_application_error(-20001, 'Возникла следующая ошибка со следующим кодом-' || SQLCODE || ' Текст ошибки - ' || SQLERRM);
 end;

@@ -18,4 +18,5 @@ exception
         dbms_output.put_line('Данный пользователь не является владельцем таблицы CASH_MACHINE и соответственно не может удалять банкоматы.');
     when others then
         dbms_output.put_line('Ошибка при попытке удаления.');
+        raise_application_error(-20001, 'Возникла следующая ошибка -' || SQLCODE || ' Текст ошибки - ' || SQLERRM);
 end;

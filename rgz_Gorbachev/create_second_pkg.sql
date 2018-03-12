@@ -24,7 +24,7 @@ create or replace package body PKG_CHANGE_DATA is
         commit;
 
     exception when others then
-        rollback;
+        raise_application_error(-20001, 'Возникла следующая ошибка -' || SQLCODE || ' Текст ошибки - ' || SQLERRM);
     end DEL_SERVICE;
 
     procedure CREATE_TRIGGER is   
@@ -48,5 +48,6 @@ create or replace package body PKG_CHANGE_DATA is
                             end;';
     exception when OTHERS then
         dbms_output.put_line('Невозможно создать триггер');
+        raise_application_error(-20001, 'Возникла следующая ошибка -' || SQLCODE || ' Текст ошибки - ' || SQLERRM);
     end CREATE_TRIGGER;
 end PKG_CHANGE_DATA;

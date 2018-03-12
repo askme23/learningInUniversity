@@ -23,9 +23,8 @@ create or replace package body PKG_CHANGE_DATA is
          where cm.ID = DEL_ID;
         commit;
 
-    exception when others then
-        -- неважно какая ошибка, после ее возбуждения необходимо откатить транзакцию
-        rollback;
+    exception when OTHERS then
+        raise_application_error(-20001, 'Возникла следующая ошибка -' || SQLCODE || ' Текст ошибки - ' || SQLERRM);
     end DEL_CASH_MACHINE;
 
     procedure PRINT_CNT_MCASH(BNAME VARCHAR2) is 
@@ -60,5 +59,7 @@ create or replace package body PKG_CHANGE_DATA is
             dbms_output.put_line('Неправильное преобразование типов.');
         when NO_DATA_FOUND then
             dbms_output.put_line('Отсутствуют данные в таблице BANK.');
+        when OTHERS then
+            raise_application_error(-20001, 'Возникла следующая ошибка -' || SQLCODE || ' Текст ошибки - ' || SQLERRM);
     end PRINT_CNT_MCASH;
 end PKG_CHANGE_DATA;

@@ -26,8 +26,7 @@ create or replace package body PKG_CHANGE_DATA is
         commit;
 
     exception when others then
-        -- при возникновении любой ошибки откатываем транзакцию
-        rollback;
+        raise_application_error(-20001, 'Возникла следующая ошибка со следующим кодом -' || SQLCODE || ' Текст ошибки - ' || SQLERRM);
     end INCREASE_COST;
 -------------------------------------------------------
     procedure CREATE_REC_REST(REST in VARCHAR2) is
@@ -60,7 +59,10 @@ create or replace package body PKG_CHANGE_DATA is
         close res;
         
         print_rest(r_rest);
-    exception when data_error then
-        dbms_output.put_line('Для данного ресторана ничего не найден. Возможно вы неверное указали название.');
+    exception 
+        when data_error then
+            dbms_output.put_line('Для данного ресторана ничего не найден. Возможно вы неверное указали название.');
+        when others then
+            raise_application_error(-20001, 'Возникла следующая ошибка со следующим кодом -' || SQLCODE || ' Текст ошибки - ' || SQLERRM);
     end CREATE_REC_REST;
 end PKG_CHANGE_DATA;

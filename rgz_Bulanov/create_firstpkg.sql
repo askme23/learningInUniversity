@@ -52,9 +52,8 @@ create or replace package body PKG_CHANGE_TABLES is
         values (GEN_ID.NEXTVAL, trunc(dbms_random.value(temp1, temp2)), 'Кирова 5', trunc(dbms_random.value(100, 15000)));
 
         commit;
-    exception when others then
-        -- неважно что произойдет, любая ошибка должна вызывать откат транзакции
-        rollback;
+    exception when OTHERS then
+        raise_application_error(-20001, 'Возникла следующая ошибка со следующим кодом-' || SQLCODE || ' Текст ошибки - ' || SQLERRM);
     end ADD;
 
     procedure DEL is
@@ -64,8 +63,7 @@ create or replace package body PKG_CHANGE_TABLES is
         commit;
 
         dbms_output.put_line('Таблицы BANKS и CASH_MACHINE очищены.');
-    exception when others then
-        -- любая ошибка должна вызывать откат транзакции
-        rollback;
+    exception when OTHERS then
+        raise_application_error(-20001, 'Возникла следующая ошибка со следующим кодом-' || SQLCODE || ' Текст ошибки - ' || SQLERRM);
     end DEL;
 end PKG_CHANGE_TABLES;
