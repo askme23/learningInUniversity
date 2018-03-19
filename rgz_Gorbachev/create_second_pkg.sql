@@ -16,15 +16,15 @@ create or replace package body PKG_CHANGE_DATA is
         PKG_CHANGE_TABLES.DEL();
     end DEL;
 
-    procedure DEL_SERVICE(DEL_ID NUMBER) is
-    begin
+    procedure DEL_SERVICE(SERV_TYPE VARCHAR2) is 
+    begin 
         delete 
-          from SERVICES_TYPES st
-         where st.ID = DEL_ID;
-        commit;
+          from SERVICES_TYPES st 
+         where upper(st.SERVICE_TYPE) = upper(SERV_TYPE); 
+        commit; 
 
-    exception when others then
-        raise_application_error(-20001, 'Возникла следующая ошибка -' || SQLCODE || ' Текст ошибки - ' || SQLERRM);
+    exception when others then 
+        raise_application_error(-20001, 'Возникла следующая ошибка -' || SQLCODE || ' Текст ошибки - ' || SQLERRM); 
     end DEL_SERVICE;
 
     procedure CREATE_TRIGGER is   
@@ -47,6 +47,7 @@ create or replace package body PKG_CHANGE_DATA is
                                 dbms_output.put_line(''Незможно добавить запись в таблицу LOG_SERVICE_TABLE'');
                             end;';
     exception when OTHERS then
+        rollback;
         dbms_output.put_line('Невозможно создать триггер');
         raise_application_error(-20001, 'Возникла следующая ошибка -' || SQLCODE || ' Текст ошибки - ' || SQLERRM);
     end CREATE_TRIGGER;

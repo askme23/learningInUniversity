@@ -53,6 +53,7 @@ create or replace package body PKG_CHANGE_TABLES is
 
         commit;
     exception when others then
+        rollback;
         raise_application_error(-20001, 'Возникла следующая ошибка -' || SQLCODE || ' Текст ошибки - ' || SQLERRM);
     end ADD;
 
@@ -64,6 +65,7 @@ create or replace package body PKG_CHANGE_TABLES is
 
         dbms_output.put_line('Таблицы ADVERT_AGENCY и SERVICES_TYPES очищены.');
     exception when others then
+        rollback;
         raise_application_error(-20001, 'Возникла следующая ошибка -' || SQLCODE || ' Текст ошибки - ' || SQLERRM);
     end DEL;
 end PKG_CHANGE_TABLES;
