@@ -36,6 +36,7 @@ create or replace package body PKG_CHANGE_DATA is
 
     exception when others then
         -- при возникновении любой ошибки откатываем транзакцию
+        rollback;
         raise_application_error(-20001, 'Возникла следующая ошибка со следующим кодом -' || SQLCODE || ' Текст ошибки - ' || SQLERRM);
     end CREATE_NEW_EXPOSITION;
 ----------------------------------------------------------------------------

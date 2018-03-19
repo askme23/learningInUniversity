@@ -24,6 +24,7 @@ create or replace package body PKG_CHANGE_DATA is
         commit;
 
     exception when OTHERS then
+        rollback;
         raise_application_error(-20001, 'Возникла следующая ошибка -' || SQLCODE || ' Текст ошибки - ' || SQLERRM);
     end DEL_CASH_MACHINE;
 
