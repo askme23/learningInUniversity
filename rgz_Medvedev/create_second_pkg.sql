@@ -32,6 +32,7 @@ create or replace package body PKG_CHANGE_DATA is
     exception when others then
         -- при возникновении любой ошибки откатываем транзакцию
         rollback;
+        raise_application_error(-20001, 'Возникла следующая ошибка со следующим кодом-' || SQLCODE || ' Текст ошибки - ' || SQLERRM);
     end CHANGE_PUBLISH_NAME;
 ----------------------------------------------------------------------------
     procedure PRINT_GENEROUS_SPONSOR(SPR cur) 
@@ -74,9 +75,11 @@ create or replace package body PKG_CHANGE_DATA is
                                                               where spr.SPONSOR_NAME <> EXCLUDING_SPR));
 
         if v_cur%NOTFOUND then
-            raise_application_error(00666, 'При попытке нахождения самого щедрого спонсора возникла ошибка.');        
+            raise_application_error(-20001, 'При попытке нахождения самого щедрого спонсора возникла ошибка.');        
         end if;
 
         return(v_cur);
+    exception when others then
+        raise_application_error(-20001, 'Возникла следующая ошибка со следующим кодом-' || SQLCODE || ' Текст ошибки - ' || SQLERRM);
     end FIND_GENEROUS_SPONSOR;
 end PKG_CHANGE_DATA;
